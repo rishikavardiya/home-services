@@ -1,0 +1,5799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SevaSetu — Cooperative Service Marketplace</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Zilla+Slab:wght@500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- QR generation -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<!-- QR scanning -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
+<style>
+:root{
+  --ink:#16302B;
+  --paper:#FBF7EF;
+  --paper-raised:#F3EDDF;
+  --ochre:#C68A2E;
+  --ochre-deep:#A8701E;
+  --clay:#A8432F;
+  --sage:#7C8A73;
+  --line:#DCD3BE;
+  --text:#3A362E;
+  --text-soft:#6B6459;
+  --good:#3F6B4A;
+  --white:#FFFFFF;
+  --shadow:0 12px 30px rgba(22,48,43,.10);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+
+body.lang-hi{
+  font-family:"Noto Sans Devanagari",Inter,sans-serif;
+}
+
+h1,h2,h3,h4{
+  font-family:"Zilla Slab",serif;
+  color:var(--ink);
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 5%;
+  border-bottom:1px solid var(--line);
+  background:rgba(251,247,239,.96);
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(8px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  width:70px;
+  height:50px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.brand-title{
+  font-family:"Zilla Slab",serif;
+  font-size:25px;
+  font-weight:700;
+  color:var(--ink);
+}
+
+.brand-tag{
+  font-size:11px;
+  color:var(--text-soft);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:11px 17px;
+  font-weight:600;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--ink);
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#0e2420;
+}
+
+.btn-secondary{
+  background:var(--ochre);
+  color:white;
+}
+
+.btn-outline{
+  background:transparent;
+  color:var(--ink);
+  border:1px solid var(--ink);
+}
+
+.btn-danger{
+  background:var(--clay);
+  color:white;
+}
+
+.btn-good{
+  background:var(--good);
+  color:white;
+}
+
+.btn-light{
+  background:var(--paper-raised);
+  color:var(--ink);
+}
+
+.btn-small{
+  padding:7px 10px;
+  font-size:12px;
+}
+
+/* ---------------- LANDING ---------------- */
+
+#landing{
+  min-height:100vh;
+}
+
+.hero{
+  padding:80px 7% 70px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:50px;
+  align-items:center;
+}
+
+.hero h1{
+  font-size:65px;
+  line-height:.98;
+  margin:15px 0;
+}
+
+.hero p{
+  max-width:680px;
+  font-size:18px;
+  line-height:1.7;
+  color:var(--text-soft);
+}
+
+.eyebrow{
+  color:var(--ochre-deep);
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px;
+}
+
+.hero-card{
+  background:var(--ink);
+  color:white;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.hero-card h2{
+  color:white;
+  margin-top:0;
+}
+
+.hero-card p{
+  color:#e7e2d7;
+}
+
+.hero-list{
+  list-style:none;
+  padding:0;
+}
+
+.hero-list li{
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  padding:20px 7% 60px;
+}
+
+.stat{
+  background:white;
+  border:1px solid var(--line);
+  padding:24px;
+  border-radius:14px;
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  color:var(--ink);
+}
+
+.stat span{
+  font-size:12px;
+  color:var(--text-soft);
+}
+
+.section{
+  padding:60px 7%;
+}
+
+.section-title{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.section-subtitle{
+  color:var(--text-soft);
+  max-width:700px;
+  line-height:1.6;
+}
+
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-top:30px;
+}
+
+.category{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+}
+
+.category-icon{
+  font-size:32px;
+}
+
+.category strong{
+  display:block;
+  margin-top:12px;
+  color:var(--ink);
+}
+
+.category small{
+  color:var(--text-soft);
+}
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.step{
+  background:var(--paper-raised);
+  padding:25px;
+  border-radius:14px;
+}
+
+.step-number{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--ochre);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+
+.roles{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.role{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:25px;
+}
+
+/* ---------------- APP LAYOUT ---------------- */
+
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:240px 1fr;
+}
+
+.sidebar{
+  background:var(--ink);
+  color:white;
+  padding:25px 15px;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.sidebar-logo{
+  font-family:"Zilla Slab",serif;
+  font-size:28px;
+  padding:0 12px 25px;
+}
+
+.sidebar small{
+  color:#b9c8c2;
+  padding:0 12px;
+}
+
+.side-nav{
+  margin-top:20px;
+}
+
+.side-btn{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  color:#dce7e2;
+  border:0;
+  padding:12px;
+  border-radius:8px;
+  margin:3px 0;
+}
+
+.side-btn:hover,
+.side-btn.active{
+  background:rgba(255,255,255,.12);
+  color:white;
+}
+
+.main{
+  min-width:0;
+}
+
+.customer-main{
+  background:
+    linear-gradient(rgba(251,247,239,.70),rgba(251,247,239,.70)),
+    url("./WhatsApp Image 2026-09-13 at 5.08.33 PM.jpeg");
+  background-size:cover;
+  background-attachment:fixed;
+}
+
+.worker-main{
+  background:
+    linear-gradient(rgba(251,247,239,.70),rgba(251,247,239,.70)),
+    url("./WhatsApp Image 2026-09-13 at 5.08.33 PM (1).jpeg");
+  background-size:cover;
+  background-attachment:fixed;
+}
+
+.topbar{
+  padding:18px 30px;
+  background:rgba(255,255,255,.88);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.topbar h2{
+  margin:0;
+}
+
+.content{
+  padding:30px;
+}
+
+.card{
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.card h3{
+  margin-top:0;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.kpi{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:20px;
+}
+
+.kpi strong{
+  display:block;
+  font-size:28px;
+  color:var(--ink);
+}
+
+.kpi span{
+  font-size:12px;
+  color:var(--text-soft);
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:var(--text-soft);
+  margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:11px;
+  background:white;
+  color:var(--text);
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--ochre);
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.form-row-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.checkbox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.checkbox input{
+  width:auto;
+}
+
+.worker-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.worker-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:20px;
+}
+
+.worker-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.worker-name{
+  font-family:"Zilla Slab",serif;
+  font-size:24px;
+  color:var(--ink);
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#e7eee8;
+  color:var(--good);
+  font-size:11px;
+  font-weight:700;
+}
+
+.badge.pending{
+  background:#fff1d9;
+  color:#996515;
+}
+
+.badge.danger{
+  background:#f8e0dc;
+  color:var(--clay);
+}
+
+.price{
+  font-size:23px;
+  color:var(--ink);
+  font-weight:700;
+}
+
+.muted{
+  color:var(--text-soft);
+  font-size:13px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:15px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+}
+
+th,
+td{
+  padding:12px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  font-size:13px;
+}
+
+th{
+  color:var(--ink);
+  background:var(--paper-raised);
+}
+
+.alert{
+  border-left:4px solid var(--ochre);
+  background:#fff8e9;
+  padding:14px;
+  border-radius:8px;
+  margin:15px 0;
+  font-size:13px;
+}
+
+.alert.good{
+  border-color:var(--good);
+  background:#edf5ee;
+}
+
+.alert.danger{
+  border-color:var(--clay);
+  background:#fae9e6;
+}
+
+/* ---------------- MODALS ---------------- */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:var(--paper);
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 30px 70px rgba(0,0,0,.25);
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  background:transparent;
+  border:0;
+  font-size:25px;
+}
+
+/* ---------------- QR ---------------- */
+
+.qr-box{
+  text-align:center;
+  padding:20px;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+
+#workerQR{
+  display:flex;
+  justify-content:center;
+  margin:15px 0;
+}
+
+.scanner{
+  text-align:center;
+}
+
+#qrVideo{
+  width:100%;
+  max-width:400px;
+  border-radius:12px;
+  background:#111;
+}
+
+#qrCanvas{
+  display:none;
+}
+
+/* ---------------- TRACKING ---------------- */
+
+.tracking-map{
+  height:230px;
+  border-radius:14px;
+  background:
+    linear-gradient(90deg,rgba(22,48,43,.08) 1px,transparent 1px),
+    linear-gradient(rgba(22,48,43,.08) 1px,transparent 1px);
+  background-size:35px 35px;
+  position:relative;
+  overflow:hidden;
+}
+
+.route{
+  position:absolute;
+  left:15%;
+  top:65%;
+  width:65%;
+  height:5px;
+  background:var(--ochre);
+  transform:rotate(-20deg);
+}
+
+.map-pin{
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:var(--clay);
+  border-radius:50%;
+  border:4px solid white;
+  box-shadow:0 3px 10px #555;
+}
+
+.pin-worker{
+  left:67%;
+  top:25%;
+}
+
+.pin-customer{
+  left:15%;
+  top:70%;
+}
+
+.live-dot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  background:#42a85c;
+  border-radius:50%;
+  margin-right:5px;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.35}
+}
+
+/* ---------------- PRICE ---------------- */
+
+.price-breakdown{
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.price-line{
+  display:flex;
+  justify-content:space-between;
+  padding:11px 14px;
+  border-bottom:1px solid var(--line);
+}
+
+.price-line:last-child{
+  border:0;
+  font-weight:700;
+  color:var(--ink);
+}
+
+/* ---------------- TOAST ---------------- */
+
+#toast{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:var(--ink);
+  color:white;
+  padding:14px 18px;
+  border-radius:9px;
+  z-index:300;
+  display:none;
+  max-width:350px;
+  box-shadow:var(--shadow);
+}
+
+/* ---------------- NEW FEATURES ---------------- */
+.language-picker{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.language-picker label{margin:0;font-size:12px}
+.language-picker select{width:auto;min-width:145px;padding:8px 10px}
+.online-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.online-status{display:flex;align-items:center;gap:10px}
+.status-dot{width:14px;height:14px;border-radius:50%;display:inline-block;background:#c0392b;box-shadow:0 0 0 4px rgba(192,57,43,.12)}
+.status-dot.online{background:#2e9d55;box-shadow:0 0 0 4px rgba(46,157,85,.12);animation:pulse 1.2s infinite}
+.status-text-online{color:#2e7d45;font-weight:700}.status-text-offline{color:#b33429;font-weight:700}
+.toggle{position:relative;width:58px;height:30px;display:inline-block}.toggle input{display:none}
+.toggle-slider{position:absolute;inset:0;background:#c0392b;border-radius:30px;transition:.2s}
+.toggle-slider:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
+.toggle input:checked+.toggle-slider{background:#2e9d55}.toggle input:checked+.toggle-slider:before{transform:translateX(28px)}
+.preference-box{margin-top:15px;border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--paper-raised)}
+.preference-options{display:flex;gap:10px;flex-wrap:wrap}.preference-option{border:1px solid var(--line);background:white;padding:9px 13px;border-radius:8px;cursor:pointer}
+.preference-option.active{border-color:var(--ink);background:var(--ink);color:white}
+.work-demand-card{border-left:4px solid var(--ochre)}.worker-count{font-size:12px;color:var(--text-soft);margin-top:8px}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media(max-width:1000px){
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .stats,
+  .kpi-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .worker-grid,
+  .grid-2{
+    grid-template-columns:1fr;
+  }
+
+  .steps,
+  .roles{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:700px){
+  .site-header{
+    flex-wrap:wrap;
+  }
+
+  .header-actions{
+    width:100%;
+  }
+
+  .header-actions .btn{
+    flex:1;
+  }
+
+  .hero{
+    padding:50px 5%;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+  .section{
+    padding:40px 5%;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    padding-left:5%;
+    padding-right:5%;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .sidebar{
+    position:relative;
+    height:auto;
+  }
+
+  .side-nav{
+    display:flex;
+    flex-wrap:wrap;
+  }
+
+  .side-btn{
+    width:auto;
+  }
+
+  .content{
+    padding:18px;
+  }
+
+  .form-row,
+  .form-row-3{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     LANDING PAGE
+========================================================= -->
+
+<section id="landing">
+
+<header class="site-header">
+
+  <div class="brand">
+
+    <img src="tag(1).jpeg"
+         alt="SevaSetu Logo"
+         onerror="this.style.display='none'">
+
+         
+
+    <div>
+      <div class="brand-title">SevaSetu</div>
+      <div class="brand-tag">by your local labour cooperative</div>
+    </div>
+<!-- TWO LOGOS -->
+        <div class="partner-logos">
+
+          <img src="https://yt3.googleusercontent.com/TZrk2-rfaExnZmf0rVzLKcsWlNVyiuo_cgojdAE3AAE9f5vlIQ8rdr64dLgIcst6xSLRrtO8H0g=s900-c-k-c0x00ffffff-no-rj"
+               alt="Labour Cooperative Logo"
+               class="partner-logo">
+
+          <img src="https://www.icmguwahati.gov.in/web_photos/ncct-logo.png"
+               alt="Federation Logo"
+               class="partner-logo">
+
+        </div>
+  </div>
+
+  <div class="header-actions">
+
+    <button class="btn btn-outline"
+            onclick="showApp('admin')">
+      Federation Login
+    </button>
+      <div class="language-picker">
+        <label for="languageSelect">🌐 Language</label>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="mr">मराठी</option>
+          <option value="bn">বাংলা</option>
+        </select>
+      </div>
+
+    <button class="btn btn-primary"
+            onclick="showApp('customer')">
+      Get Started
+    </button>
+
+  </div>
+
+</header>
+
+<div class="hero">
+
+  <div>
+
+    <div class="eyebrow">
+      Cooperative-owned service marketplace
+    </div>
+
+    <h1>
+      Skilled hands,<br>
+      owned by the community.
+    </h1>
+
+    <p>
+      SevaSetu connects households and institutions with
+      verified cooperative workers while supporting fair
+      wages, worker welfare and consumer trust.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button class="btn btn-secondary"
+              onclick="showApp('customer')">
+        Book a Service
+      </button>
+
+      <button class="btn btn-outline"
+              onclick="showApp('worker')">
+        Join as a Worker
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="hero-card">
+
+    <h2>One platform. Three stakeholders.</h2>
+
+    <p>
+      Customers, cooperative workers and federations
+      work through one transparent ecosystem.
+    </p>
+
+    <ul class="hero-list">
+      <li>✓ Verified cooperative workers</li>
+      <li>✓ Location-based matching</li>
+      <li>✓ Digital payment & invoice</li>
+      <li>✓ Worker welfare contribution</li>
+      <li>✓ Federation-controlled marketplace</li>
+      <li>✓ AI-assisted workforce allocation</li>
+    </ul>
+
+  </div>
+
+</div>
+
+<div class="stats">
+
+  <div class="stat">
+    <strong>12,480</strong>
+    <span>Verified cooperative workers</span>
+  </div>
+
+  <div class="stat">
+    <strong>340</strong>
+    <span>Member labour societies</span>
+  </div>
+
+  <div class="stat">
+    <strong>98,600</strong>
+    <span>Services completed</span>
+  </div>
+
+  <div class="stat">
+    <strong>₹0</strong>
+    <span>Private platform commission</span>
+  </div>
+
+</div>
+
+<section class="section">
+
+  <div class="eyebrow">Services</div>
+
+  <h2 class="section-title">Find skilled cooperative workers</h2>
+
+  <p class="section-subtitle">
+    Book verified workers for everyday household and
+    institutional services.
+  </p>
+
+  <div id="categoryGrid" class="category-grid"></div>
+
+</section>
+
+<section class="section">
+
+  <div class="eyebrow">How it works</div>
+
+  <h2 class="section-title">From need to verified service</h2>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Tell us your need</h3>
+      <p>
+        Select a service, gender preference, location and
+        Now or Scheduled booking.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Get matched</h3>
+      <p>
+        The platform recommends verified workers based on
+        service, location, availability and ratings.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Pay & verify</h3>
+      <p>
+        Pay digitally, identify the worker using QR,
+        complete the service and confirm with OTP.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="eyebrow">Platform Roles</div>
+
+  <h2 class="section-title">Built for the cooperative ecosystem</h2>
+
+  <div class="roles">
+
+    <div class="role">
+      <h3>Customer</h3>
+      <p>
+        Search, book, track, pay, share evidence,
+        raise complaints and rate workers.
+      </p>
+      <button class="btn btn-primary"
+              onclick="showApp('customer')">
+        Customer Portal
+      </button>
+    </div>
+
+    <div class="role">
+      <h3>Worker</h3>
+      <p>
+        Register with e-Shram, upload documents,
+        receive jobs, verify customers and request wage revision.
+      </p>
+      <button class="btn btn-secondary"
+              onclick="showApp('worker')">
+        Worker Portal
+      </button>
+    </div>
+
+    <div class="role">
+      <h3>Federation / Society</h3>
+      <p>
+        Verify workers, monitor demand, manage welfare
+        and assign workers to B2B/B2G contracts.
+      </p>
+      <button class="btn btn-outline"
+              onclick="showApp('admin')">
+        Federation Portal
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMER APP
+========================================================= -->
+
+<section id="customerApp" class="app hidden">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">SevaSetu</div>
+
+    <small>CUSTOMER PORTAL</small>
+
+    <div class="side-nav">
+
+      <button id="custSideBrowse"
+              class="side-btn active"
+              onclick="custNav('browse')">
+        🔎 Book a Service
+      </button>
+
+      <button id="custSideBookings"
+              class="side-btn"
+              onclick="custNav('bookings')">
+        📋 My Bookings
+      </button>
+
+      <button id="custSideInvoices"
+              class="side-btn"
+              onclick="custNav('invoices')">
+        🧾 Invoices & Payments
+      </button>
+
+      <button id="custSideComplaint"
+              class="side-btn"
+              onclick="custNav('complaint')">
+        ⚠️ Complaint Box
+      </button>
+
+      <button class="side-btn"
+              onclick="goLanding()">
+        ← Home
+      </button>
+
+    </div>
+
+  </aside>
+
+  <main class="main customer-main">
+
+    <div class="topbar">
+
+      <div>
+        <h2 id="customerTitle">Book a Service</h2>
+        <span class="muted" id="customerGreeting">
+          Login to book verified cooperative workers
+        </span>
+      </div>
+
+      <div class="actions">
+        <span id="customerLoginStatus"
+              class="badge pending">
+          Not verified
+        </span>
+
+        <button class="btn btn-primary btn-small"
+                onclick="openCustomerLogin()">
+          Customer Login
+        </button>
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <!-- CUSTOMER BROWSE -->
+
+      <div id="custBrowse">
+
+        <div class="card">
+
+          <div class="form-row">
+
+            <div>
+              <label>Service category</label>
+
+              <select id="custCategory"
+                      onchange="renderWorkers()">
+              </select>
+
+            </div>
+
+            <div>
+              <label>Your area</label>
+
+              <select id="custArea"
+                      onchange="renderWorkers()">
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>Search skill</label>
+
+            <input id="custSearch"
+                   placeholder="Example: wiring, tap repair, painting"
+                   oninput="renderWorkers()">
+          </div>
+          <div class="preference-box">
+            <label>Service provider preference</label>
+            <div class="preference-options">
+              <button type="button" id="prefAny" class="preference-option active" onclick="setCustomerPreference('Any')">Any</button>
+              <button type="button" id="prefMale" class="preference-option" onclick="setCustomerPreference('Male')">Male</button>
+              <button type="button" id="prefFemale" class="preference-option" onclick="setCustomerPreference('Female')">Female</button>
+            </div>
+            <small class="muted">Choose a preference for your convenience. You can change it anytime.</small>
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>AI Recommended Workers</h3>
+
+          <div class="alert good">
+            <strong>AI recommendation engine:</strong>
+            workers are ranked using service match, area proximity,
+            verification status, PCC status and rating.
+          </div>
+
+          <div id="workerList"
+               class="worker-grid"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CUSTOMER BOOKINGS -->
+
+      <div id="custBookings"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>My Bookings</h3>
+
+          <div id="customerBookingsList"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CUSTOMER INVOICES -->
+
+      <div id="custInvoices"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Invoices & Payments</h3>
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Worker</th>
+                  <th>Date</th>
+                  <th>Method</th>
+                  <th>Amount</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody id="invoiceTable"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CUSTOMER COMPLAINT -->
+
+      <div id="custComplaint"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Complaint & Support</h3>
+
+          <p class="muted">
+            Report a service issue directly to the cooperative.
+          </p>
+
+          <div class="form-group">
+
+            <label>Booking</label>
+
+            <select id="complaintBooking"></select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Complaint type</label>
+
+            <select id="complaintType">
+
+              <option>Worker behaviour</option>
+              <option>Service quality</option>
+              <option>Payment issue</option>
+              <option>Late arrival</option>
+              <option>Other</option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Complaint details</label>
+
+            <textarea id="complaintText"
+                      placeholder="Describe your issue"></textarea>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Photo/video evidence (optional)</label>
+
+            <input type="file"
+                   id="complaintMedia"
+                   multiple
+                   accept="image/*,video/*">
+
+          </div>
+
+          <button class="btn btn-danger"
+                  onclick="submitComplaint()">
+            Submit Complaint
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- =========================================================
+     WORKER APP
+========================================================= -->
+
+<section id="workerApp" class="app hidden">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">SevaSetu</div>
+
+    <small>WORKER PORTAL</small>
+
+    <div class="side-nav">
+
+      <button id="workerSideProfile"
+              class="side-btn active"
+              onclick="workerNav('profile')">
+        👤 My Profile
+      </button>
+
+      <button id="workerSideBookings"
+              class="side-btn"
+              onclick="workerNav('bookings')">
+        📋 Bookings
+      </button>
+
+      <button id="workerSideWelfare"
+              class="side-btn"
+              onclick="workerNav('welfare')">
+        🛡 Welfare & Insurance
+      </button>
+
+      <button class="side-btn"
+              onclick="goLanding()">
+        ← Home
+      </button>
+
+    </div>
+
+  </aside>
+
+  <main class="main worker-main">
+
+    <div class="topbar">
+
+      <div>
+        <h2 id="workerTitle">Worker Profile</h2>
+        <span class="muted">
+          Cooperative worker registration & verification
+        </span>
+      </div>
+
+      <span id="workerStatus"
+            class="badge pending">
+        Not Registered
+      </span>
+
+    </div>
+
+    <div class="content">
+
+      <!-- WORKER PROFILE -->
+
+      <div id="workerProfilePage">
+
+        <div class="card">
+          <div class="online-panel">
+            <div>
+              <h3 style="margin-bottom:6px">Work Availability</h3>
+              <div class="muted">Go online to receive nearby and scheduled work.</div>
+            </div>
+            <div class="online-status">
+              <span id="workerOnlineDot" class="status-dot"></span>
+              <span id="workerOnlineText" class="status-text-offline">Offline</span>
+              <label class="toggle">
+                <input id="workerOnlineToggle" type="checkbox" onchange="toggleWorkerOnline(this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div id="workDemandInfo" class="alert danger">
+            You are Offline. Turn Online to receive nearby work requests.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Worker Registration</h3>
+
+          <div class="alert">
+            Your e-Shram ID is used as a unique worker identifier.
+            Upload documents and PCC for cooperative verification.
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>Full name *</label>
+
+              <input id="workerName"
+                     placeholder="Enter full name">
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Gender *</label>
+
+              <select id="workerGender">
+
+                <option value="">Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>Primary skill *</label>
+
+              <select id="workerCategory">
+              </select>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Service area *</label>
+
+              <select id="workerArea">
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>Cooperative society *</label>
+
+              <input id="workerSociety"
+                     placeholder="Example: Bhopal Labour Cooperative Society">
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Years of experience</label>
+
+              <input id="workerExperience"
+                     type="number"
+                     min="0"
+                     placeholder="5">
+
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              e-Shram 12-digit unique ID *
+            </label>
+
+            <input id="workerEShram"
+                   maxlength="12"
+                   inputmode="numeric"
+                   placeholder="Enter 12-digit e-Shram ID">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Skills / certifications
+            </label>
+
+            <textarea id="workerSkills"
+                      placeholder="Example: Domestic wiring, MCB installation, fan repair"></textarea>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Upload ID / skill documents *
+            </label>
+
+            <input type="file"
+                   id="workerDocuments"
+                   multiple
+                   accept=".pdf,image/*">
+
+            <div id="workerDocumentNames"
+                 class="muted">
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Upload Police Clearance Certificate (PCC)
+            </label>
+
+            <input type="file"
+                   id="workerPCC"
+                   accept=".pdf,image/*">
+
+            <div id="workerPCCName"
+                 class="muted">
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary"
+                  onclick="submitWorkerRegistration()">
+            Submit for Cooperative Verification
+          </button>
+
+        </div>
+
+        <div class="card">
+
+          <h3>Verification Status</h3>
+
+          <div id="workerVerificationInfo"></div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>Wage Revision Request</h3>
+
+          <p class="muted">
+            A verified PCC strengthens worker verification and
+            allows the worker to raise a wage revision request.
+          </p>
+
+          <div id="wageRequestStatus"
+               class="alert">
+            PCC verification required before raising a wage request.
+          </div>
+
+          <div class="form-row">
+
+            <div>
+              <label>Current wage / hour</label>
+              <input id="currentWage"
+                     type="number"
+                     value="200">
+            </div>
+
+            <div>
+              <label>Requested wage / hour</label>
+              <input id="requestedWage"
+                     type="number"
+                     value="250">
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Reason</label>
+
+            <textarea id="wageReason"
+                      placeholder="Explain why wage revision is requested"></textarea>
+
+          </div>
+
+          <button class="btn btn-secondary"
+                  onclick="raiseWageRequest()">
+            Raise Wage Request
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- WORKER BOOKINGS -->
+
+      <div id="workerBookingsPage"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Incoming Service Requests</h3>
+
+          <div id="workerBookingList"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- WELFARE -->
+
+      <div id="workerWelfarePage"
+           class="hidden">
+
+        <div class="kpi-grid">
+
+          <div class="kpi">
+            <strong>₹18,400</strong>
+            <span>Society welfare fund</span>
+          </div>
+
+          <div class="kpi">
+            <strong>₹5L</strong>
+            <span>Accident insurance cover</span>
+          </div>
+
+          <div class="kpi">
+            <strong>5%</strong>
+            <span>Example welfare contribution</span>
+          </div>
+
+          <div class="kpi">
+            <strong>Active</strong>
+            <span>Insurance status</span>
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>Worker Welfare</h3>
+
+          <p>
+            The prototype shows a transparent allocation model
+            where a portion of the service value supports worker
+            welfare and cooperative operations.
+          </p>
+
+          <div class="alert">
+            Pricing allocation shown in this prototype:
+            <strong>90% worker</strong> and
+            <strong>10% welfare / GST / cooperative operation</strong>.
+            Actual statutory/GST treatment can be configured
+            by the federation in the production system.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- =========================================================
+     FEDERATION / ADMIN APP
+========================================================= -->
+
+<section id="adminApp" class="app hidden">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">SevaSetu</div>
+
+    <small>FEDERATION PORTAL</small>
+
+    <div class="side-nav">
+
+      <button id="adminSideOverview"
+              class="side-btn active"
+              onclick="adminNav('overview')">
+        📊 Overview
+      </button>
+
+      <button id="adminSideVerify"
+              class="side-btn"
+              onclick="adminNav('verify')">
+        ✓ Verification Queue
+      </button>
+
+      <button id="adminSideForecast"
+              class="side-btn"
+              onclick="adminNav('forecast')">
+        🤖 AI Demand Forecast
+      </button>
+
+      <button id="adminSideSocieties"
+              class="side-btn"
+              onclick="adminNav('societies')">
+        🏢 Societies
+      </button>
+
+      <button id="adminSideContracts"
+              class="side-btn"
+              onclick="adminNav('contracts')">
+        📑 B2B / B2G Contracts
+      </button>
+
+      <button id="adminSideBulk"
+              class="side-btn"
+              onclick="adminNav('bulk')">
+        👥 Bulk Assignment
+      </button>
+
+      <button class="side-btn"
+              onclick="goLanding()">
+        ← Home
+      </button>
+
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+        <h2 id="adminTitle">Federation Dashboard</h2>
+        <span class="muted">
+          Federation-controlled cooperative marketplace
+        </span>
+      </div>
+
+      <span class="badge">
+        Admin Demo
+      </span>
+
+    </div>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+
+      <div id="adminOverview">
+
+        <div class="kpi-grid">
+
+          <div class="kpi">
+            <strong>12,480</strong>
+            <span>Workers</span>
+          </div>
+
+          <div class="kpi">
+            <strong id="queueCount">103</strong>
+            <span>Verification queue</span>
+          </div>
+
+          <div class="kpi">
+            <strong>2,140</strong>
+            <span>Bookings this week</span>
+          </div>
+
+          <div class="kpi">
+            <strong>₹8.4L</strong>
+            <span>Welfare fund</span>
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>Service Demand</h3>
+
+          <canvas id="demandChart"
+                  height="110"></canvas>
+
+        </div>
+
+      </div>
+
+
+      <!-- VERIFICATION -->
+
+      <div id="adminVerify"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Worker Verification Queue</h3>
+
+          <div id="verificationQueue"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FORECAST -->
+
+      <div id="adminForecast"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>AI Demand Forecast</h3>
+
+          <canvas id="forecastChart"
+                  height="110"></canvas>
+
+        </div>
+
+        <div class="grid-3">
+
+          <div class="card">
+            <h3>+4 Electricians</h3>
+            <p class="muted">Recommended around Kolar Road.</p>
+          </div>
+
+          <div class="card">
+            <h3>+2 Caregivers</h3>
+            <p class="muted">Recommended around Habibganj.</p>
+          </div>
+
+          <div class="card">
+            <h3>3 Painter Reassignments</h3>
+            <p class="muted">Suggested for Bairagarh demand.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SOCIETIES -->
+
+      <div id="adminSocieties"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Member Labour Societies</h3>
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Society</th>
+                  <th>Area</th>
+                  <th>Workers</th>
+                  <th>Bookings</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>Bhopal Labour Cooperative</td>
+                  <td>Bhopal</td>
+                  <td>1,420</td>
+                  <td>9,820</td>
+                  <td><span class="badge">Active</span></td>
+                </tr>
+
+                <tr>
+                  <td>Kolar Workers Society</td>
+                  <td>Kolar Road</td>
+                  <td>830</td>
+                  <td>4,210</td>
+                  <td><span class="badge">Active</span></td>
+                </tr>
+
+                <tr>
+                  <td>Habibganj Service Society</td>
+                  <td>Habibganj</td>
+                  <td>690</td>
+                  <td>3,840</td>
+                  <td><span class="badge">Active</span></td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTRACTS -->
+
+      <div id="adminContracts"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>B2B / B2G Contracts</h3>
+
+          <p class="muted">
+            Federation can manage institutional contracts
+            and allocate cooperative workers in bulk.
+          </p>
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>Contract type</label>
+
+              <select id="contractType">
+
+                <option>B2B — Business</option>
+                <option>B2G — Government</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Organisation</label>
+
+              <input id="contractOrganisation"
+                     placeholder="Organisation / department name">
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>Required service</label>
+
+              <select id="contractService">
+              </select>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Workers required</label>
+
+              <input id="contractWorkers"
+                     type="number"
+                     min="1"
+                     value="5">
+
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary"
+                  onclick="createContract()">
+            Create Contract
+          </button>
+
+        </div>
+
+        <div class="card">
+
+          <h3>Active Contracts</h3>
+
+          <div id="contractList"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BULK ASSIGNMENT -->
+
+      <div id="adminBulk"
+           class="hidden">
+
+        <div class="card">
+
+          <h3>Bulk Worker Assignment</h3>
+
+          <div class="form-group">
+
+            <label>Select contract</label>
+
+            <select id="bulkContract"></select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Worker selection</label>
+
+            <div id="bulkWorkerList"></div>
+
+          </div>
+
+          <button class="btn btn-secondary"
+                  onclick="assignBulkWorkers()">
+            Assign Selected Workers
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMER LOGIN MODAL
+========================================================= -->
+
+<div id="customerLoginModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Customer Login</h2>
+
+      <button class="close"
+              onclick="closeModal('customerLoginModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div id="customerLoginStep1">
+
+      <div class="form-group">
+
+        <label>Name *</label>
+
+        <input id="loginCustomerName"
+               placeholder="Your full name">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Mobile number *</label>
+
+        <input id="loginCustomerMobile"
+               maxlength="10"
+               inputmode="numeric"
+               placeholder="10-digit mobile number">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Address *</label>
+
+        <textarea id="loginCustomerAddress"
+                  placeholder="Your address"></textarea>
+
+      </div>
+
+      <button class="btn btn-primary"
+              onclick="sendCustomerOTP()">
+        Send OTP
+      </button>
+
+    </div>
+
+    <div id="customerLoginStep2"
+         class="hidden">
+
+      <div class="alert">
+        Demo OTP:
+        <strong id="demoOTP"></strong>
+      </div>
+
+      <div class="form-group">
+
+        <label>Enter OTP</label>
+
+        <input id="customerOTP"
+               maxlength="6"
+               inputmode="numeric"
+               placeholder="6-digit OTP">
+
+      </div>
+
+      <button class="btn btn-primary"
+              onclick="verifyCustomerOTP()">
+        Verify Mobile
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     BOOKING MODAL
+========================================================= -->
+
+<div id="bookingModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Book Service</h2>
+
+      <button class="close"
+              onclick="closeModal('bookingModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div id="selectedWorkerInfo"></div>
+
+    <div class="form-group">
+
+      <label>Booking type</label>
+
+      <div class="actions">
+
+        <button id="nowBtn"
+                class="btn btn-primary"
+                onclick="setBookingMode('now')">
+          ⚡ Now
+        </button>
+
+        <button id="scheduleBtn"
+                class="btn btn-outline"
+                onclick="setBookingMode('schedule')">
+          📅 Schedule
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="scheduleFields"
+         class="hidden">
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>Date</label>
+
+          <input id="bookingDate"
+                 type="date">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Time</label>
+
+          <input id="bookingTime"
+                 type="time">
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="form-row">
+
+      <div class="form-group">
+
+        <label>Service duration</label>
+
+        <select id="bookingDuration">
+
+          <option value="1">1 hour</option>
+          <option value="2" selected>2 hours</option>
+          <option value="3">3 hours</option>
+          <option value="4">4 hours</option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Gender preference</label>
+
+        <select id="bookingGender">
+
+          <option>Any</option>
+          <option>Male</option>
+          <option>Female</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Service address *</label>
+
+      <textarea id="bookingAddress"
+                placeholder="Enter service address"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Landmark</label>
+
+      <input id="bookingLandmark"
+             placeholder="Nearby landmark">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Priority / special requirement</label>
+
+      <textarea id="bookingPriority"
+                placeholder="Example: elderly person at home, urgent repair, preferred worker gender..."></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Photo/video for assigned worker
+      </label>
+
+      <input id="customerBookingMedia"
+             type="file"
+             multiple
+             accept="image/*,video/*">
+
+      <small class="muted">
+        You can share photos/videos to help the worker identify
+        the problem while travelling.
+      </small>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Price Breakdown</h3>
+
+      <div id="bookingPrice"></div>
+
+    </div>
+
+    <button class="btn btn-primary"
+            style="width:100%"
+            onclick="continueToPayment()">
+      Continue to Payment
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PAYMENT MODAL
+========================================================= -->
+
+<div id="paymentModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Secure Payment</h2>
+
+      <button class="close"
+              onclick="closeModal('paymentModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div class="alert">
+      Demo payment screen. A real UPI/payment gateway will be
+      connected through the backend.
+    </div>
+
+    <div id="paymentSummary"></div>
+
+    <div class="form-group">
+
+      <label>Payment method</label>
+
+      <select id="paymentMethod">
+
+        <option>UPI</option>
+        <option>Card</option>
+        <option>Net Banking</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Demo payment reference</label>
+
+      <input id="paymentReference"
+             placeholder="Example: UPI-DEMO-1234">
+
+    </div>
+
+    <button class="btn btn-good"
+            style="width:100%"
+            onclick="confirmBooking()">
+      ✓ Pay & Confirm Booking
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     QR SCANNER MODAL
+========================================================= -->
+
+<div id="scannerModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Scan Worker QR</h2>
+
+      <button class="close"
+              onclick="stopScanner()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="scanner">
+
+      <p class="muted">
+        Scan the QR displayed on the assigned worker's page
+        to confirm the worker identity.
+      </p>
+
+      <video id="qrVideo"
+             autoplay
+             playsinline></video>
+
+      <canvas id="qrCanvas"></canvas>
+
+      <div class="actions"
+           style="justify-content:center">
+
+        <button class="btn btn-primary"
+                onclick="startScanner()">
+          Start Camera
+        </button>
+
+        <button class="btn btn-secondary"
+                onclick="simulateQRScan()">
+          Demo: Simulate Scan
+        </button>
+
+      </div>
+
+      <div id="scanResult"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     INVOICE MODAL
+========================================================= -->
+
+<div id="invoiceModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Invoice</h2>
+
+      <button class="close"
+              onclick="closeModal('invoiceModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div id="invoiceDetails"></div>
+
+    <button class="btn btn-primary"
+            onclick="window.print()">
+      Print / Save Invoice
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     WORKER QR MODAL
+========================================================= -->
+
+<div id="workerQRModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Worker Identity QR</h2>
+
+      <button class="close"
+              onclick="closeModal('workerQRModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div class="qr-box">
+
+      <div id="workerQR"></div>
+
+      <strong id="qrWorkerName"></strong>
+
+      <p class="muted"
+         id="qrBookingId"></p>
+
+      <p>
+        Customer can scan this QR to verify the assigned worker.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     COMPLETION OTP MODAL
+========================================================= -->
+
+<div id="completionOTPModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Service Completion OTP</h2>
+
+      <button class="close"
+              onclick="closeModal('completionOTPModal')">
+        ×
+      </button>
+
+    </div>
+
+    <div class="alert good">
+
+      Worker identity verified successfully.
+
+    </div>
+
+    <p>
+      Give the following OTP to the worker after the service
+      is completed. The worker enters it in their portal.
+    </p>
+
+    <div style="text-align:center">
+
+      <div style="font-size:40px;
+                  font-weight:700;
+                  letter-spacing:8px;
+                  color:var(--ink)"
+           id="completionOTPValue">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div id="toast"></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const AREAS = [
+  "Kolar Road",
+  "Habibganj",
+  "Bairagarh",
+  "Ayodhya Bypass",
+  "MP Nagar",
+  "Arera Colony",
+  "Old Bhopal"
+];
+
+const CATEGORIES = [
+  {id:"electrician",name:"Electrician",icon:"⚡"},
+  {id:"plumber",name:"Plumber",icon:"🔧"},
+  {id:"carpenter",name:"Carpenter",icon:"🪚"},
+  {id:"painter",name:"Painter",icon:"🎨"},
+  {id:"domestic",name:"Domestic Help",icon:"🏠"},
+  {id:"caregiver",name:"Caregiver",icon:"❤️"},
+  {id:"driver",name:"Driver",icon:"🚗"},
+  {id:"gardener",name:"Gardener",icon:"🌱"}
+];
+
+let workers = [
+
+  {
+    id:"W101",
+    name:"Sunita Devi",
+    category:"electrician",
+    gender:"Female",
+    area:"Kolar Road",
+    society:"Bhopal Labour Cooperative",
+    rating:4.9,
+    jobs:182,
+    rate:225,
+    verified:true,
+    pcc:true,
+    skills:"Domestic wiring, fan repair, MCB installation"
+  },
+
+  {
+    id:"W102",
+    name:"Ramesh Kumar",
+    category:"plumber",
+    gender:"Male",
+    area:"Habibganj",
+    society:"Habibganj Service Society",
+    rating:4.8,
+    jobs:156,
+    rate:200,
+    verified:true,
+    pcc:true,
+    skills:"Tap repair, leakage, bathroom fitting"
+  },
+
+  {
+    id:"W103",
+    name:"Meena Bai",
+    category:"domestic",
+    gender:"Female",
+    area:"Bairagarh",
+    society:"Bhopal Labour Cooperative",
+    rating:4.7,
+    jobs:211,
+    rate:180,
+    verified:true,
+    pcc:true,
+    skills:"Cleaning, cooking, household support"
+  },
+
+  {
+    id:"W104",
+    name:"Arjun Singh",
+    category:"carpenter",
+    gender:"Male",
+    area:"MP Nagar",
+    society:"Central Labour Society",
+    rating:4.6,
+    jobs:120,
+    rate:230,
+    verified:true,
+    pcc:false,
+    skills:"Furniture repair, doors, cabinets"
+  },
+
+  {
+    id:"W105",
+    name:"Kavita Sharma",
+    category:"caregiver",
+    gender:"Female",
+    area:"Habibganj",
+    society:"Habibganj Service Society",
+    rating:4.9,
+    jobs:96,
+    rate:210,
+    verified:true,
+    pcc:true,
+    skills:"Elder care, patient assistance"
+  }
+
+];
+
+
+let customer = {
+  loggedIn:false,
+  name:"",
+  mobile:"",
+  address:"",
+  otp:"",
+  otpVerified:false
+};
+
+
+let workerProfile = {
+  registered:false,
+  workerId:"W-DEMO",
+  name:"",
+  gender:"",
+  category:"",
+  area:"",
+  society:"",
+  experience:"",
+  eShram:"",
+  skills:"",
+  documents:[],
+  pcc:"",
+  pccStatus:"Not Uploaded",
+  verified:false,
+  wageRequest:null
+};
+workerProfile.online=false;
+let customerPreference="Any";
+
+/* Three additional demo workers for every service. */
+const EXTRA_WORKERS=[
+["W201","Amit Verma","electrician","Male","Kolar Road","Bhopal Labour Cooperative",4.6,92,220,"Wiring, switch repair, fan installation"],
+["W202","Pooja Yadav","electrician","Female","Arera Colony","Central Labour Society",4.8,108,225,"Wiring, MCB, light fitting"],
+["W203","Imran Khan","electrician","Male","MP Nagar","Bhopal Labour Cooperative",4.5,77,215,"Fan repair, socket repair, wiring"],
+["W204","Neha Patel","plumber","Female","Kolar Road","Kolar Workers Society",4.7,88,195,"Tap repair, pipe leakage, fitting"],
+["W205","Suresh Raj","plumber","Male","Bairagarh","Bhopal Labour Cooperative",4.6,101,190,"Bathroom fitting, leakage repair"],
+["W206","Farida Khan","plumber","Female","Old Bhopal","Central Labour Society",4.8,73,205,"Pipe repair, tap installation"],
+["W207","Vikas Sharma","carpenter","Male","Habibganj","Habibganj Service Society",4.7,84,230,"Furniture repair, cabinets"],
+["W208","Anjali Sen","carpenter","Female","MP Nagar","Central Labour Society",4.8,69,225,"Doors, furniture, shelves"],
+["W209","Rohit Pawar","carpenter","Male","Kolar Road","Kolar Workers Society",4.5,95,220,"Wood repair, doors, tables"],
+["W210","Rekha Joshi","painter","Female","Arera Colony","Bhopal Labour Cooperative",4.9,112,210,"Wall painting, texture, touch-up"],
+["W211","Manoj Sahu","painter","Male","Bairagarh","Bhopal Labour Cooperative",4.6,86,200,"Interior painting, putty"],
+["W212","Shalini Rao","painter","Female","Habibganj","Habibganj Service Society",4.7,74,205,"Home painting, finishing"],
+["W213","Lata Bai","domestic","Female","Kolar Road","Kolar Workers Society",4.8,132,180,"Cleaning, cooking, household support"],
+["W214","Ramesh Das","domestic","Male","Old Bhopal","Central Labour Society",4.5,119,175,"Cleaning, grocery support"],
+["W215","Nisha Khan","domestic","Female","MP Nagar","Bhopal Labour Cooperative",4.7,98,185,"Cooking, cleaning, home support"],
+["W216","Sanjay Mehta","caregiver","Male","Kolar Road","Kolar Workers Society",4.7,61,210,"Elder care, patient assistance"],
+["W217","Asha Verma","caregiver","Female","Arera Colony","Central Labour Society",4.9,83,215,"Elder care, mobility support"],
+["W218","Komal Jain","caregiver","Female","Bairagarh","Bhopal Labour Cooperative",4.8,71,205,"Patient assistance, home care"],
+["W219","Deepak Singh","driver","Male","Habibganj","Habibganj Service Society",4.6,145,240,"Local driving, pickup and drop"],
+["W220","Ritu Sharma","driver","Female","MP Nagar","Central Labour Society",4.8,118,235,"City driving, family transport"],
+["W221","Naveen Gupta","driver","Male","Kolar Road","Kolar Workers Society",4.7,126,245,"Local transport, airport drop"],
+["W222","Gopal Mishra","gardener","Male","Old Bhopal","Bhopal Labour Cooperative",4.6,64,190,"Lawn care, pruning, planting"],
+["W223","Sunaina Roy","gardener","Female","Arera Colony","Central Labour Society",4.8,58,195,"Plant care, pruning, garden setup"],
+["W224","Mahesh Yadav","gardener","Male","Bairagarh","Bhopal Labour Cooperative",4.5,72,185,"Lawn maintenance, planting"]
+];
+EXTRA_WORKERS.forEach(w=>workers.push({id:w[0],name:w[1],category:w[2],gender:w[3],area:w[4],society:w[5],rating:w[6],jobs:w[7],rate:w[8],verified:true,pcc:true,skills:w[9],online:true}));
+
+
+
+let custBookings = [
+
+  {
+    id:"BK-2291",
+    workerId:"W101",
+    worker:"Sunita Devi",
+    category:"electrician",
+    area:"Kolar Road",
+    mode:"Schedule",
+    date:"2026-08-28",
+    time:"11:00",
+    address:"Kolar Road, Bhopal",
+    duration:2,
+    amount:450,
+    status:"Completed",
+    rated:true,
+    qrVerified:true,
+    completionOTP:""
+  }
+
+];
+
+
+let workerBookings = [
+
+  {
+    id:"BK-2301",
+    workerId:"W-DEMO",
+    worker:"Demo Worker",
+    customer:"Rahul Sharma",
+    service:"Electrician",
+    area:"Kolar Road",
+    mode:"Now",
+    date:"",
+    time:"",
+    address:"Kolar Road, Bhopal",
+    duration:2,
+    amount:450,
+    status:"Pending",
+    accepted:false,
+    completionOTP:"",
+    evidence:[]
+  },
+
+  {
+    id:"BK-2302",
+    workerId:"W-DEMO",
+    worker:"Demo Worker",
+    customer:"Priya Verma",
+    service:"Plumber",
+    area:"Habibganj",
+    mode:"Schedule",
+    date:"2026-09-18",
+    time:"10:30",
+    address:"Habibganj, Bhopal",
+    duration:2,
+    amount:400,
+    status:"Pending",
+    accepted:false,
+    completionOTP:"",
+    evidence:[]
+  }
+
+];
+
+
+let invoices = [
+
+  {
+    id:"INV-1042",
+    bookingId:"BK-2291",
+    worker:"Sunita Devi",
+    date:"28 Aug 2026",
+    method:"UPI",
+    amount:450,
+    workerShare:405,
+    allocation:45
+  }
+
+];
+
+
+let complaints = [];
+
+let contracts = [];
+
+let verificationQueue = [
+
+  {
+    id:"W101",
+    name:"Sunita Devi",
+    skill:"Electrician",
+    documents:["ID Proof","Skill Certificate"],
+    pcc:"Verified",
+    status:"Verified"
+  },
+
+  {
+    id:"W102",
+    name:"Ramesh Kumar",
+    skill:"Plumber",
+    documents:["ID Proof","Skill Certificate"],
+    pcc:"Verified",
+    status:"Pending"
+  },
+
+  {
+    id:"W103",
+    name:"Meena Bai",
+    skill:"Domestic Help",
+    documents:["ID Proof"],
+    pcc:"Uploaded",
+    status:"Pending"
+  }
+
+];
+
+
+let selectedWorker = null;
+let bookingMode = "now";
+let pendingBooking = null;
+let currentScanBookingId = null;
+
+let scannerStream = null;
+let scannerAnimation = null;
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  renderCategoryGrid();
+  populateSelects();
+  renderWorkers();
+  renderCustomerBookings();
+  renderInvoices();
+  renderComplaints();
+  renderWorkerBookings();
+  renderVerificationQueue();
+  renderContracts();
+  renderBulkWorkers();
+
+});
+
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function toast(message){
+
+  const el = $("toast");
+
+  el.innerText = message;
+  el.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(()=>{
+    el.style.display = "none";
+  },3500);
+
+}
+
+
+function openModal(id){
+  $(id).classList.add("show");
+}
+
+
+function closeModal(id){
+  $(id).classList.remove("show");
+}
+
+
+/* =========================================================
+   LANDING
+========================================================= */
+
+function renderCategoryGrid(){
+
+  const grid = $("categoryGrid");
+
+  if(!grid) return;
+
+  grid.innerHTML = CATEGORIES.map(c=>`
+
+    <div class="category">
+
+      <div class="category-icon">${c.icon}</div>
+
+      <strong>${c.name}</strong>
+
+      <small class="worker-count">
+        ${workers.filter(w=>w.category===c.id).length} registered demo workers
+      </small>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+function showApp(which){
+
+  $("landing").classList.add("hidden");
+  $("customerApp").classList.add("hidden");
+  $("workerApp").classList.add("hidden");
+  $("adminApp").classList.add("hidden");
+
+  if(which==="customer"){
+
+    $("customerApp").classList.remove("hidden");
+
+    custNav("browse");
+
+  }
+
+  if(which==="worker"){
+
+    $("workerApp").classList.remove("hidden");
+
+    workerNav("profile");
+
+  }
+
+  if(which==="admin"){
+
+    $("adminApp").classList.remove("hidden");
+
+    adminNav("overview");
+
+  }
+
+}
+
+
+function goLanding(){
+
+  $("landing").classList.remove("hidden");
+  $("customerApp").classList.add("hidden");
+  $("workerApp").classList.add("hidden");
+  $("adminApp").classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   SELECT OPTIONS
+========================================================= */
+
+function populateSelects(){
+
+  const categoryOptions = CATEGORIES.map(c=>
+    `<option value="${c.id}">${c.icon} ${c.name}</option>`
+  ).join("");
+
+  $("custCategory").innerHTML = categoryOptions;
+
+  $("workerCategory").innerHTML =
+    `<option value="">Select skill</option>` +
+    categoryOptions;
+
+  $("contractService").innerHTML = categoryOptions;
+
+  $("custArea").innerHTML =
+    AREAS.map(a=>`<option>${a}</option>`).join("");
+
+  $("workerArea").innerHTML =
+    `<option value="">Select area</option>` +
+    AREAS.map(a=>`<option>${a}</option>`).join("");
+
+  $("custArea").value = AREAS[0];
+
+}
+
+
+/* =========================================================
+   MULTILINGUAL + CUSTOMER PREFERENCE
+========================================================= */
+const LANGUAGE_TEXT={
+ en:{tag:"by your local labour cooperative",fed:"Federation Login",start:"Get Started",book:"Book a Service",join:"Join as a Worker"},
+ hi:{tag:"आपकी स्थानीय श्रमिक सहकारी समिति द्वारा",fed:"फेडरेशन लॉगिन",start:"शुरू करें",book:"सेवा बुक करें",join:"श्रमिक के रूप में जुड़ें"},
+ mr:{tag:"आपल्या स्थानिक कामगार सहकारी संस्थेकडून",fed:"फेडरेशन लॉगिन",start:"सुरू करा",book:"सेवा बुक करा",join:"कामगार म्हणून सामील व्हा"},
+ bn:{tag:"আপনার স্থানীয় শ্রমিক সমবায়ের মাধ্যমে",fed:"ফেডারেশন লগইন",start:"শুরু করুন",book:"পরিষেবা বুক করুন",join:"কর্মী হিসেবে যোগ দিন"}
+};
+function changeLanguage(lang){
+  const t=LANGUAGE_TEXT[lang]||LANGUAGE_TEXT.en;
+  document.body.classList.toggle("lang-hi",lang==="hi");
+  const tag=document.querySelector(".brand-tag");if(tag)tag.innerText=t.tag;
+  const h=document.querySelectorAll(".header-actions .btn");
+  if(h[0])h[0].innerText=t.fed;if(h[1])h[1].innerText=t.start;
+  const b=document.querySelectorAll(".hero-buttons .btn");
+  if(b[0])b[0].innerText=t.book;if(b[1])b[1].innerText=t.join;
+  localStorage.setItem("sevaSetuLanguage",lang);
+}
+function setCustomerPreference(gender){
+  customerPreference=gender;
+  ["Any","Male","Female"].forEach(g=>{const el=$("pref"+g);if(el)el.classList.toggle("active",g===gender)});
+  renderWorkers();
+}
+function toggleWorkerOnline(isOnline){
+  workerProfile.online=isOnline;
+  const dot=$("workerOnlineDot"),label=$("workerOnlineText"),info=$("workDemandInfo");
+  if(dot)dot.classList.toggle("online",isOnline);
+  if(label){label.innerText=isOnline?"Online":"Offline";label.className=isOnline?"status-text-online":"status-text-offline";}
+  if(info){
+    info.className=isOnline?"alert good":"alert danger";
+    info.innerHTML=isOnline?"<strong>You are Online.</strong> Nearby requests and scheduled work will be allocated to you.":"You are Offline. Turn Online to receive nearby work requests.";
+  }
+  renderWorkerBookings();renderWorkerAllocationSummary();
+  toast(isOnline?"You are now Online. New work requests are available.":"You are now Offline. New work allocation paused.");
+}
+function renderWorkerAllocationSummary(){
+  const box=$("workerAllocationSummary");if(!box)return;
+  const area=workerProfile.area||"your area";
+  const category=workerProfile.category?getCategoryName(workerProfile.category):"your service";
+  const nearby=workerBookings.filter(b=>(!workerProfile.area||b.area===workerProfile.area)&&(!workerProfile.category||b.service.toLowerCase()===category.toLowerCase())&&b.status==="Pending").length;
+  const scheduled=workerBookings.filter(b=>b.mode==="Schedule"&&b.status==="Pending").length;
+  box.innerHTML=workerProfile.online?`<div class="grid-3"><div class="kpi"><strong>${nearby}</strong><span>Nearby requests</span></div><div class="kpi"><strong>${scheduled}</strong><span>Scheduled demand</span></div><div class="kpi"><strong>Online</strong><span>${category} · ${area}</span></div></div>`:`<div class="alert danger">Go Online to start receiving work allocation.</div>`;
+}
+function updateServiceWorkerCounts(){
+  document.querySelectorAll(".category").forEach(card=>{
+    const title=card.querySelector("strong")?.innerText;
+    const c=CATEGORIES.find(x=>x.name===title);
+    const small=card.querySelector(".worker-count");
+    if(c&&small)small.innerText=`${workers.filter(w=>w.category===c.id).length} registered demo workers`;
+  });
+}
+
+/* =========================================================
+   CUSTOMER LOGIN
+========================================================= */
+
+function openCustomerLogin(){
+
+  if(customer.loggedIn){
+
+    toast("Customer is already verified.");
+
+    return;
+
+  }
+
+  openModal("customerLoginModal");
+
+}
+
+
+function sendCustomerOTP(){
+
+  const name = $("loginCustomerName").value.trim();
+  const mobile = $("loginCustomerMobile").value.trim();
+  const address = $("loginCustomerAddress").value.trim();
+
+  if(!name || !/^\d{10}$/.test(mobile) || !address){
+
+    toast("Please enter valid name, 10-digit mobile and address.");
+
+    return;
+
+  }
+
+  customer.name = name;
+  customer.mobile = mobile;
+  customer.address = address;
+
+  customer.otp =
+    String(Math.floor(100000 + Math.random()*900000));
+
+  $("demoOTP").innerText = customer.otp;
+
+  $("customerLoginStep1").classList.add("hidden");
+  $("customerLoginStep2").classList.remove("hidden");
+
+  toast("Demo OTP generated.");
+
+}
+
+
+function verifyCustomerOTP(){
+
+  const otp = $("customerOTP").value.trim();
+
+  if(otp !== customer.otp){
+
+    toast("Incorrect OTP.");
+
+    return;
+
+  }
+
+  customer.loggedIn = true;
+  customer.otpVerified = true;
+
+  $("customerLoginStatus").innerText = "Mobile Verified";
+  $("customerLoginStatus").className = "badge";
+
+  $("customerGreeting").innerText =
+    `Welcome, ${customer.name}. Your mobile is verified.`;
+
+  closeModal("customerLoginModal");
+
+  toast("Customer mobile verified successfully.");
+
+}
+
+
+/* =========================================================
+   CUSTOMER NAVIGATION
+========================================================= */
+
+function custNav(page){
+
+  $("custBrowse").classList.add("hidden");
+  $("custBookings").classList.add("hidden");
+  $("custInvoices").classList.add("hidden");
+  $("custComplaint").classList.add("hidden");
+
+  document.querySelectorAll("#customerApp .side-btn")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(page==="browse"){
+
+    $("custBrowse").classList.remove("hidden");
+    $("customerTitle").innerText="Book a Service";
+    $("custSideBrowse").classList.add("active");
+
+  }
+
+  if(page==="bookings"){
+
+    $("custBookings").classList.remove("hidden");
+    $("customerTitle").innerText="My Bookings";
+    $("custSideBookings").classList.add("active");
+
+    renderCustomerBookings();
+
+  }
+
+  if(page==="invoices"){
+
+    $("custInvoices").classList.remove("hidden");
+    $("customerTitle").innerText="Invoices & Payments";
+    $("custSideInvoices").classList.add("active");
+
+    renderInvoices();
+
+  }
+
+  if(page==="complaint"){
+
+    $("custComplaint").classList.remove("hidden");
+    $("customerTitle").innerText="Complaint Box";
+    $("custSideComplaint").classList.add("active");
+
+    renderComplaints();
+
+  }
+
+}
+
+
+/* =========================================================
+   AI RECOMMENDATION / LIVE LOCATION MATCHING
+========================================================= */
+
+function renderWorkers(){
+  const category=$("custCategory").value;
+  const area=$("custArea").value;
+  const search=$("custSearch").value.toLowerCase();
+
+  let list=workers.filter(w=>{
+    const categoryMatch=!category||w.category===category;
+    const searchMatch=!search||w.name.toLowerCase().includes(search)||w.skills.toLowerCase().includes(search);
+    const genderMatch=customerPreference==="Any"||w.gender===customerPreference;
+    return categoryMatch&&searchMatch&&genderMatch;
+  });
+
+  list=list.map(w=>{
+    let score=0;
+    if(w.area===area)score+=40;
+    score+=w.rating*8;
+    if(w.verified)score+=15;
+    if(w.pcc)score+=10;
+    if(w.online!==false)score+=8;
+    return {...w,aiScore:Math.round(score)};
+  }).sort((a,b)=>b.aiScore-a.aiScore);
+
+  $("workerList").innerHTML=list.length?list.map(w=>`
+    <div class="worker-card">
+      <div class="worker-top">
+        <div><div class="worker-name">${w.name}</div><div class="muted">${getCategoryName(w.category)} · ${w.gender}</div></div>
+        <span class="badge">✓ Verified</span>
+      </div>
+      <p class="muted">📍 ${w.area}<br>🏢 ${w.society}<br>⭐ ${w.rating} · ${w.jobs} completed jobs</p>
+      <p>${w.skills}</p>
+      <div class="actions">
+        <span class="price">₹${w.rate}/hr</span>
+        <span class="badge">PCC ${w.pcc?"✓":"Pending"}</span>
+        ${w.online!==false?'<span class="badge">● Online</span>':'<span class="badge danger">Offline</span>'}
+      </div>
+      <div class="alert"><strong>AI Match Score: ${w.aiScore}</strong><br>${w.area===area?"Nearby worker match":"Area match available through location network"}</div>
+      <div class="actions"><button class="btn btn-primary" onclick="openBooking('${w.id}')">Book</button></div>
+    </div>`).join(""):`<div class="alert">No workers found for this requirement and preference.</div>`;
+
+  updateServiceWorkerCounts();
+}
+
+
+function getCategoryName(id){
+
+  const c = CATEGORIES.find(x=>x.id===id);
+
+  return c ? c.name : id;
+
+}
+
+
+/* =========================================================
+   BOOKING
+========================================================= */
+
+function openBooking(workerId){
+
+  if(!customer.loggedIn){
+
+    toast("Please verify your mobile before booking.");
+
+    openCustomerLogin();
+
+    return;
+
+  }
+
+  selectedWorker =
+    workers.find(w=>w.id===workerId);
+
+  if(!selectedWorker) return;
+
+  $("selectedWorkerInfo").innerHTML = `
+
+    <div class="alert good">
+
+      <strong>${selectedWorker.name}</strong>
+
+      <br>
+
+      ${getCategoryName(selectedWorker.category)}
+      · ${selectedWorker.area}
+
+      <br>
+
+      ⭐ ${selectedWorker.rating}
+      · ₹${selectedWorker.rate}/hour
+
+    </div>
+
+  `;
+
+  $("bookingAddress").value =
+    customer.address || "";
+
+  setBookingMode("now");
+
+  updateBookingPrice();
+
+  openModal("bookingModal");
+
+}
+
+
+function setBookingMode(mode){
+
+  bookingMode = mode;
+
+  if(mode==="now"){
+
+    $("scheduleFields").classList.add("hidden");
+
+    $("nowBtn").className =
+      "btn btn-primary";
+
+    $("scheduleBtn").className =
+      "btn btn-outline";
+
+  }
+
+  else{
+
+    $("scheduleFields").classList.remove("hidden");
+
+    $("nowBtn").className =
+      "btn btn-outline";
+
+    $("scheduleBtn").className =
+      "btn btn-primary";
+
+  }
+
+  updateBookingPrice();
+
+}
+
+
+$("bookingDuration").addEventListener("change",updateBookingPrice);
+
+
+function calculatePrice(){
+
+  if(!selectedWorker) return 0;
+
+  const duration =
+    Number($("bookingDuration").value);
+
+  return selectedWorker.rate * duration;
+
+}
+
+
+function updateBookingPrice(){
+
+  if(!selectedWorker) return;
+
+  const base = calculatePrice();
+
+  const workerShare =
+    Math.round(base*0.90);
+
+  const allocation =
+    base-workerShare;
+
+  $("bookingPrice").innerHTML = `
+
+    <div class="price-breakdown">
+
+      <div class="price-line">
+        <span>Service value</span>
+        <strong>₹${base}</strong>
+      </div>
+
+      <div class="price-line">
+        <span>90% worker share</span>
+        <strong>₹${workerShare}</strong>
+      </div>
+
+      <div class="price-line">
+        <span>10% welfare / GST / cooperative operation</span>
+        <strong>₹${allocation}</strong>
+      </div>
+
+      <div class="price-line">
+        <span>Total payable</span>
+        <strong>₹${base}</strong>
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function continueToPayment(){
+
+  if(!customer.loggedIn){
+
+    toast("Please verify customer mobile.");
+
+    return;
+
+  }
+
+  const address =
+    $("bookingAddress").value.trim();
+
+  if(!address){
+
+    toast("Please enter service address.");
+
+    return;
+
+  }
+
+  if(bookingMode==="schedule"){
+
+    if(!$("bookingDate").value ||
+       !$("bookingTime").value){
+
+      toast("Please select schedule date and time.");
+
+      return;
+
+    }
+
+  }
+
+  pendingBooking = {
+
+    worker:selectedWorker,
+    mode:bookingMode,
+    date:bookingMode==="schedule"
+      ? $("bookingDate").value
+      : "",
+
+    time:bookingMode==="schedule"
+      ? $("bookingTime").value
+      : "",
+
+    duration:Number($("bookingDuration").value),
+
+    gender:$("bookingGender").value,
+
+    address,
+
+    landmark:$("bookingLandmark").value,
+
+    priority:$("bookingPriority").value,
+
+    customerMedia:
+      Array.from($("customerBookingMedia").files)
+        .map(f=>f.name),
+
+    amount:calculatePrice()
+
+  };
+
+  $("paymentSummary").innerHTML = `
+
+    <div class="price-breakdown">
+
+      <div class="price-line">
+        <span>Worker</span>
+        <strong>${selectedWorker.name}</strong>
+      </div>
+
+      <div class="price-line">
+        <span>Service</span>
+        <strong>${getCategoryName(selectedWorker.category)}</strong>
+      </div>
+
+      <div class="price-line">
+        <span>Booking</span>
+        <strong>
+          ${bookingMode==="now"
+            ? "Now"
+            : pendingBooking.date+" "+pendingBooking.time}
+        </strong>
+      </div>
+
+      <div class="price-line">
+        <span>Total</span>
+        <strong>₹${pendingBooking.amount}</strong>
+      </div>
+
+    </div>
+
+  `;
+
+  closeModal("bookingModal");
+
+  openModal("paymentModal");
+
+}
+
+
+function confirmBooking(){
+
+  if(!pendingBooking) return;
+
+  const reference =
+    $("paymentReference").value.trim() ||
+    "DEMO-" + Date.now();
+
+  const id =
+    "BK-" +
+    Math.floor(2300+Math.random()*600);
+
+  const b = {
+
+    id,
+
+    workerId:pendingBooking.worker.id,
+
+    worker:pendingBooking.worker.name,
+
+    category:pendingBooking.worker.category,
+
+    area:pendingBooking.worker.area,
+
+    mode:
+      pendingBooking.mode==="now"
+      ? "Now"
+      : "Schedule",
+
+    date:pendingBooking.date,
+
+    time:pendingBooking.time,
+
+    address:pendingBooking.address,
+
+    landmark:pendingBooking.landmark,
+
+    duration:pendingBooking.duration,
+
+    gender:pendingBooking.gender,
+
+    priority:pendingBooking.priority,
+
+    customerMedia:pendingBooking.customerMedia,
+
+    amount:pendingBooking.amount,
+
+    status:
+      pendingBooking.mode==="now"
+      ? "Confirmed"
+      : "Scheduled",
+
+    rated:false,
+
+    qrVerified:false,
+
+    completionOTP:""
+
+  };
+
+  custBookings.unshift(b);
+
+  workerBookings.unshift({
+
+    id,
+
+    workerId:pendingBooking.worker.id,
+
+    worker:pendingBooking.worker.name,
+
+    customer:customer.name,
+
+    service:getCategoryName(
+      pendingBooking.worker.category
+    ),
+
+    area:pendingBooking.worker.area,
+
+    mode:b.mode,
+
+    date:b.date,
+
+    time:b.time,
+
+    address:b.address,
+
+    duration:b.duration,
+
+    amount:b.amount,
+
+    status:"Pending",
+
+    accepted:false,
+
+    completionOTP:"",
+
+    customerMedia:b.customerMedia,
+
+    evidence:[]
+
+  });
+
+  const workerShare =
+    Math.round(b.amount*.90);
+
+  invoices.unshift({
+
+    id:"INV-"+Math.floor(1100+Math.random()*800),
+
+    bookingId:id,
+
+    worker:b.worker,
+
+    date:new Date().toLocaleDateString(
+      "en-IN",
+      {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      }
+    ),
+
+    method:$("paymentMethod").value,
+
+    reference,
+
+    amount:b.amount,
+
+    workerShare,
+
+    allocation:b.amount-workerShare
+
+  });
+
+  closeModal("paymentModal");
+
+  pendingBooking=null;
+
+  renderCustomerBookings();
+  renderWorkerBookings();
+  renderInvoices();
+
+  toast(
+    `Booking ${id} confirmed. Invoice generated.`
+  );
+
+}
+
+
+/* =========================================================
+   CUSTOMER BOOKINGS
+========================================================= */
+
+function renderCustomerBookings(){
+
+  const box =
+    $("customerBookingsList");
+
+  if(!box) return;
+
+  if(!custBookings.length){
+
+    box.innerHTML =
+      `<p class="muted">No bookings yet.</p>`;
+
+    return;
+
+  }
+
+  box.innerHTML = custBookings.map(b=>`
+
+    <div class="card">
+
+      <div class="worker-top">
+
+        <div>
+
+          <h3>${b.worker}</h3>
+
+          <div class="muted">
+            Booking ID: ${b.id}
+          </div>
+
+        </div>
+
+        <span class="badge
+          ${b.status==="Completed" ? "" : "pending"}">
+
+          ${b.status}
+
+        </span>
+
+      </div>
+
+      <p>
+
+        <strong>${getCategoryName(b.category)}</strong>
+
+        <br>
+
+        📍 ${b.area}
+
+        <br>
+
+        🗓 ${b.mode==="Now"
+          ? "Now"
+          : b.date+" at "+b.time}
+
+        <br>
+
+        🏠 ${b.address}
+
+      </p>
+
+      <div class="actions">
+
+        ${
+          b.status!=="Completed"
+
+          ?
+
+          `<button class="btn btn-primary btn-small"
+             onclick="openScanner('${b.id}')">
+             📷 Scan Worker QR
+           </button>`
+
+          : ""
+
+        }
+
+        ${
+          b.mode==="Now" &&
+          b.status!=="Completed"
+
+          ?
+
+          `<button class="btn btn-secondary btn-small"
+             onclick="startLiveTracking('${b.id}')">
+             📍 Live Tracking
+           </button>`
+
+          : ""
+
+        }
+
+        <button class="btn btn-light btn-small"
+                onclick="viewInvoiceForBooking('${b.id}')">
+          🧾 Invoice
+        </button>
+
+        ${
+          b.status==="Completed" && !b.rated
+
+          ?
+
+          `<button class="btn btn-good btn-small"
+             onclick="rateBooking('${b.id}')">
+             ⭐ Rate
+           </button>`
+
+          : ""
+
+        }
+
+      </div>
+
+      ${
+        b.qrVerified
+
+        ?
+
+        `<div class="alert good">
+           ✓ Worker identity verified by QR.
+           ${
+             b.status!=="Completed"
+             ? "Completion OTP has been generated."
+             : "Service completed."
+           }
+         </div>`
+
+        : ""
+
+      }
+
+      ${
+        b.customerMedia?.length
+
+        ?
+
+        `<div class="muted">
+           Customer shared:
+           ${b.customerMedia.join(", ")}
+         </div>`
+
+        : ""
+
+      }
+
+    </div>
+
+  `).join("");
+
+}
+
+
+/* =========================================================
+   QR SCANNING
+========================================================= */
+
+function openScanner(bookingId){
+
+  currentScanBookingId = bookingId;
+
+  $("scanResult").innerHTML="";
+
+  openModal("scannerModal");
+
+}
+
+
+async function startScanner(){
+
+  try{
+
+    scannerStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:"environment"}
+      });
+
+    $("qrVideo").srcObject =
+      scannerStream;
+
+    scanFrame();
+
+  }
+
+  catch(error){
+
+    $("scanResult").innerHTML = `
+
+      <div class="alert danger">
+        Camera access was not available.
+        Use the Demo: Simulate Scan button.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+function scanFrame(){
+
+  if(!scannerStream) return;
+
+  const video = $("qrVideo");
+  const canvas = $("qrCanvas");
+
+  if(video.readyState===video.HAVE_ENOUGH_DATA){
+
+    canvas.width=video.videoWidth;
+    canvas.height=video.videoHeight;
+
+    const ctx=canvas.getContext("2d");
+
+    ctx.drawImage(
+      video,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const imageData =
+      ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+    const code =
+      jsQR(
+        imageData.data,
+        imageData.width,
+        imageData.height
+      );
+
+    if(code){
+
+      processQR(code.data);
+
+      return;
+
+    }
+
+  }
+
+  scannerAnimation =
+    requestAnimationFrame(scanFrame);
+
+}
+
+
+function processQR(data){
+
+  try{
+
+    const qrData =
+      JSON.parse(data);
+
+    const b =
+      custBookings.find(
+        x=>x.id===currentScanBookingId
+      );
+
+    if(!b){
+
+      toast("Booking not found.");
+
+      return;
+
+    }
+
+    if(
+      qrData.bookingId!==b.id ||
+      qrData.workerId!==b.workerId
+    ){
+
+      $("scanResult").innerHTML = `
+
+        <div class="alert danger">
+          QR does not match this booking.
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+    verifyWorkerIdentity(b);
+
+  }
+
+  catch(e){
+
+    $("scanResult").innerHTML = `
+
+      <div class="alert danger">
+        Invalid SevaSetu QR code.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+function simulateQRScan(){
+
+  const b =
+    custBookings.find(
+      x=>x.id===currentScanBookingId
+    );
+
+  if(!b){
+
+    toast("Booking not found.");
+
+    return;
+
+  }
+
+  verifyWorkerIdentity(b);
+
+}
+
+
+function verifyWorkerIdentity(b){
+
+  b.qrVerified=true;
+
+  let otp =
+    String(
+      Math.floor(
+        100000+
+        Math.random()*900000
+      )
+    );
+
+  b.completionOTP=otp;
+
+  const wb =
+    workerBookings.find(
+      x=>x.id===b.id
+    );
+
+  if(wb){
+
+    wb.completionOTP=otp;
+
+  }
+
+  closeModal("scannerModal");
+
+  $("completionOTPValue").innerText=otp;
+
+  openModal("completionOTPModal");
+
+  renderCustomerBookings();
+  renderWorkerBookings();
+
+  toast("Worker identity verified. Completion OTP generated.");
+
+}
+
+
+function stopScanner(){
+
+  if(scannerAnimation){
+
+    cancelAnimationFrame(scannerAnimation);
+
+  }
+
+  scannerAnimation=null;
+
+  if(scannerStream){
+
+    scannerStream.getTracks()
+      .forEach(t=>t.stop());
+
+  }
+
+  scannerStream=null;
+
+  $("qrVideo").srcObject=null;
+
+  closeModal("scannerModal");
+
+}
+
+
+/* =========================================================
+   LIVE TRACKING
+========================================================= */
+
+function startLiveTracking(bookingId){
+
+  const b =
+    custBookings.find(
+      x=>x.id===bookingId
+    );
+
+  if(!b) return;
+
+  if(b.mode!=="Now"){
+
+    toast("Live tracking is available only for Now bookings.");
+
+    return;
+
+  }
+
+  b.status="In Progress";
+
+  const wb =
+    workerBookings.find(
+      x=>x.id===bookingId
+    );
+
+  if(wb){
+
+    wb.status="In Progress";
+
+  }
+
+  renderCustomerBookings();
+  renderWorkerBookings();
+
+  showTrackingScreen(b);
+
+}
+
+
+function showTrackingScreen(b){
+
+  const tracking = document.createElement("div");
+
+  tracking.className="modal show";
+
+  tracking.innerHTML=`
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2>Live Worker Tracking</h2>
+
+        <button class="close"
+                onclick="this.closest('.modal').remove()">
+          ×
+        </button>
+
+      </div>
+
+      <div class="alert good">
+
+        <span class="live-dot"></span>
+        Live tracking active
+
+      </div>
+
+      <div class="tracking-map">
+
+        <div class="route"></div>
+
+        <div class="map-pin pin-customer"></div>
+
+        <div class="map-pin pin-worker"></div>
+
+      </div>
+
+      <p>
+
+        <strong>${b.worker}</strong> is travelling to your address.
+
+      </p>
+
+      <p class="muted">
+
+        📍 ${b.address}
+
+      </p>
+
+      <div class="alert">
+
+        Prototype simulation:
+        production version can use worker GPS +
+        WebSocket/location APIs for real-time tracking.
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(tracking);
+
+  /*
+    Browser GPS can be requested when available.
+    It does not share worker location automatically;
+    worker-side GPS + backend is required for production.
+  */
+
+  if(navigator.geolocation){
+
+    navigator.geolocation.getCurrentPosition(
+      pos=>{
+        console.log(
+          "Customer location available:",
+          pos.coords.latitude,
+          pos.coords.longitude
+        );
+      },
+      ()=>{}
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CUSTOMER INVOICES
+========================================================= */
+
+function renderInvoices(){
+
+  const table =
+    $("invoiceTable");
+
+  if(!table) return;
+
+  table.innerHTML =
+    invoices.map(i=>`
+
+      <tr>
+
+        <td>${i.id}</td>
+
+        <td>${i.worker}</td>
+
+        <td>${i.date}</td>
+
+        <td>${i.method}</td>
+
+        <td><strong>₹${i.amount}</strong></td>
+
+        <td>
+
+          <button class="btn btn-light btn-small"
+                  onclick="viewInvoice('${i.id}')">
+            View
+          </button>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+function viewInvoice(id){
+
+  const i =
+    invoices.find(x=>x.id===id);
+
+  if(!i) return;
+
+  $("invoiceDetails").innerHTML=`
+
+    <div class="card">
+
+      <h3>SevaSetu Service Invoice</h3>
+
+      <p>
+        <strong>Invoice:</strong> ${i.id}<br>
+        <strong>Booking:</strong> ${i.bookingId}<br>
+        <strong>Worker:</strong> ${i.worker}<br>
+        <strong>Date:</strong> ${i.date}<br>
+        <strong>Payment:</strong> ${i.method}<br>
+        <strong>Reference:</strong> ${i.reference || "DEMO"}
+      </p>
+
+      <div class="price-breakdown">
+
+        <div class="price-line">
+          <span>Total service value</span>
+          <strong>₹${i.amount}</strong>
+        </div>
+
+        <div class="price-line">
+          <span>90% worker share</span>
+          <strong>₹${i.workerShare}</strong>
+        </div>
+
+        <div class="price-line">
+          <span>10% welfare / GST / cooperative operation</span>
+          <strong>₹${i.allocation}</strong>
+        </div>
+
+        <div class="price-line">
+          <span>Total paid</span>
+          <strong>₹${i.amount}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  openModal("invoiceModal");
+
+}
+
+
+function viewInvoiceForBooking(bookingId){
+
+  const i =
+    invoices.find(
+      x=>x.bookingId===bookingId
+    );
+
+  if(i){
+
+    viewInvoice(i.id);
+
+  }
+  else{
+
+    toast("Invoice not found.");
+
+  }
+
+}
+
+
+/* =========================================================
+   RATING
+========================================================= */
+
+function rateBooking(id){
+
+  const rating =
+    prompt(
+      "Give a rating from 1 to 5:"
+    );
+
+  const value =
+    Number(rating);
+
+  if(value<1 || value>5 || !value){
+
+    toast("Please enter 1 to 5.");
+
+    return;
+
+  }
+
+  const b =
+    custBookings.find(
+      x=>x.id===id
+    );
+
+  if(b){
+
+    b.rated=true;
+    b.customerRating=value;
+
+  }
+
+  toast("Thank you. Rating submitted.");
+
+  renderCustomerBookings();
+
+}
+
+
+/* =========================================================
+   COMPLAINTS
+========================================================= */
+
+function renderComplaints(){
+
+  const select =
+    $("complaintBooking");
+
+  if(!select) return;
+
+  select.innerHTML =
+    custBookings.map(b=>
+      `<option value="${b.id}">
+        ${b.id} — ${b.worker}
+      </option>`
+    ).join("");
+
+}
+
+
+function submitComplaint(){
+
+  const bookingId =
+    $("complaintBooking").value;
+
+  const type =
+    $("complaintType").value;
+
+  const text =
+    $("complaintText").value.trim();
+
+  if(!text){
+
+    toast("Please describe the complaint.");
+
+    return;
+
+  }
+
+  const files =
+    Array.from(
+      $("complaintMedia").files
+    ).map(f=>f.name);
+
+  complaints.unshift({
+
+    id:"CMP-"+Date.now(),
+
+    bookingId,
+
+    type,
+
+    text,
+
+    files,
+
+    status:"Submitted"
+
+  });
+
+  $("complaintText").value="";
+  $("complaintMedia").value="";
+
+  toast("Complaint submitted to the cooperative.");
+
+  renderComplaints();
+
+}
+
+
+/* =========================================================
+   WORKER NAVIGATION
+========================================================= */
+
+function workerNav(page){
+
+  $("workerProfilePage").classList.add("hidden");
+  $("workerBookingsPage").classList.add("hidden");
+  $("workerWelfarePage").classList.add("hidden");
+
+  document.querySelectorAll("#workerApp .side-btn")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(page==="profile"){
+
+    $("workerProfilePage").classList.remove("hidden");
+
+    $("workerTitle").innerText="Worker Profile";
+
+    $("workerSideProfile")
+      .classList.add("active");
+
+    updateWorkerProfileUI();
+
+  }
+
+  if(page==="bookings"){
+
+    $("workerBookingsPage").classList.remove("hidden");
+
+    $("workerTitle").innerText="Worker Bookings";
+
+    $("workerSideBookings")
+      .classList.add("active");
+
+    renderWorkerBookings();
+
+  }
+
+  if(page==="welfare"){
+
+    $("workerWelfarePage").classList.remove("hidden");
+
+    $("workerTitle").innerText="Welfare & Insurance";
+
+    $("workerSideWelfare")
+      .classList.add("active");
+
+  }
+
+}
+
+
+/* =========================================================
+   WORKER REGISTRATION
+========================================================= */
+
+function submitWorkerRegistration(){
+
+  const name =
+    $("workerName").value.trim();
+
+  const gender =
+    $("workerGender").value;
+
+  const category =
+    $("workerCategory").value;
+
+  const area =
+    $("workerArea").value;
+
+  const society =
+    $("workerSociety").value.trim();
+
+  const eShram =
+    $("workerEShram").value.trim();
+
+  const documents =
+    Array.from(
+      $("workerDocuments").files
+    ).map(f=>f.name);
+
+  const pccFiles =
+    Array.from(
+      $("workerPCC").files
+    ).map(f=>f.name);
+
+  if(
+    !name ||
+    !gender ||
+    !category ||
+    !area ||
+    !society ||
+    !/^\d{12}$/.test(eShram)
+  ){
+
+    toast(
+      "Please complete all required fields and enter a 12-digit e-Shram ID."
+    );
+
+    return;
+
+  }
+
+  if(!documents.length){
+
+    toast("Please upload at least one worker document.");
+
+    return;
+
+  }
+
+  workerProfile.registered=true;
+
+  workerProfile.name=name;
+  workerProfile.gender=gender;
+  workerProfile.category=category;
+  workerProfile.area=area;
+  workerProfile.society=society;
+  workerProfile.experience=
+    $("workerExperience").value;
+  workerProfile.eShram=eShram;
+  workerProfile.skills=
+    $("workerSkills").value;
+
+  workerProfile.documents=documents;
+
+  if(pccFiles.length){
+
+    workerProfile.pcc=pccFiles.join(", ");
+    workerProfile.pccStatus="Uploaded";
+
+  }
+
+  else{
+
+    workerProfile.pcc="";
+    workerProfile.pccStatus="Not Uploaded";
+
+  }
+
+  workerProfile.verified=false;
+
+  const existing =
+    verificationQueue.find(
+      x=>x.id===workerProfile.workerId
+    );
+
+  const queueEntry={
+
+    id:workerProfile.workerId,
+
+    name,
+
+    skill:getCategoryName(category),
+
+    documents,
+
+    pcc:
+      pccFiles.length
+      ? "Uploaded"
+      : "Not Uploaded",
+
+    status:"Pending"
+
+  };
+
+  if(existing){
+
+    Object.assign(existing,queueEntry);
+
+  }
+  else{
+
+    verificationQueue.push(queueEntry);
+
+  }
+
+  updateWorkerProfileUI();
+
+  renderVerificationQueue();
+
+  toast(
+    "Worker registration submitted for federation verification."
+  );
+
+}
+
+
+function updateWorkerProfileUI(){
+  const t=$("workerOnlineToggle");if(t)t.checked=!!workerProfile.online;
+  if($("workerOnlineDot"))$("workerOnlineDot").classList.toggle("online",!!workerProfile.online);
+  if($("workerOnlineText")){$("workerOnlineText").innerText=workerProfile.online?"Online":"Offline";$("workerOnlineText").className=workerProfile.online?"status-text-online":"status-text-offline";}
+
+  if(!workerProfile.registered){
+
+    $("workerStatus").innerText="Not Registered";
+    $("workerStatus").className="badge pending";
+
+    $("workerVerificationInfo").innerHTML=`
+
+      <div class="alert">
+        Complete worker registration to enter the
+        cooperative verification process.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  $("workerStatus").innerText =
+    workerProfile.verified
+    ? "Verified Worker"
+    : "Pending Verification";
+
+  $("workerStatus").className =
+    workerProfile.verified
+    ? "badge"
+    : "badge pending";
+
+  $("workerVerificationInfo").innerHTML=`
+
+    <div class="grid-3">
+
+      <div class="kpi">
+        <strong>
+          ${workerProfile.verified ? "✓" : "⏳"}
+        </strong>
+        <span>Identity verification</span>
+      </div>
+
+      <div class="kpi">
+        <strong>
+          ${workerProfile.pccStatus}
+        </strong>
+        <span>PCC status</span>
+      </div>
+
+      <div class="kpi">
+        <strong>
+          ${workerProfile.documents.length}
+        </strong>
+        <span>Uploaded documents</span>
+      </div>
+
+    </div>
+
+    <div class="alert">
+
+      <strong>e-Shram ID:</strong>
+      ${workerProfile.eShram}
+
+      <br>
+
+      <strong>Society:</strong>
+      ${workerProfile.society}
+
+    </div>
+
+  `;
+
+  if(workerProfile.pccStatus==="Verified"){
+
+    $("wageRequestStatus").className=
+      "alert good";
+
+    $("wageRequestStatus").innerHTML=
+      "✓ PCC verified. You can raise a wage revision request.";
+
+  }
+  else{
+
+    $("wageRequestStatus").className=
+      "alert";
+
+    $("wageRequestStatus").innerHTML=
+      "PCC verification required before raising a wage request.";
+
+  }
+
+}
+
+
+/* =========================================================
+   WAGE REQUEST
+========================================================= */
+
+function raiseWageRequest(){
+
+  if(workerProfile.pccStatus!=="Verified"){
+
+    toast(
+      "PCC must be verified before raising a wage request."
+    );
+
+    return;
+
+  }
+
+  const requested =
+    Number($("requestedWage").value);
+
+  if(!requested){
+
+    toast("Enter requested wage.");
+
+    return;
+
+  }
+
+  workerProfile.wageRequest={
+
+    current:Number(
+      $("currentWage").value
+    ),
+
+    requested,
+
+    reason:$("wageReason").value,
+
+    status:"Pending Federation Review"
+
+  };
+
+  $("wageRequestStatus").innerHTML=`
+
+    ✓ Wage revision request submitted.
+
+    <br>
+
+    Requested:
+    <strong>₹${requested}/hour</strong>
+
+    <br>
+
+    Status:
+    <strong>Pending Federation Review</strong>
+
+  `;
+
+  $("wageRequestStatus").className=
+    "alert good";
+
+  toast("Wage revision request submitted.");
+
+}
+
+
+/* =========================================================
+   WORKER BOOKINGS
+========================================================= */
+
+function renderWorkerBookings(){
+  const box=$("workerBookingList");if(!box)return;
+  renderWorkerAllocationSummary();
+  if(!workerProfile.online){
+    box.innerHTML=`<div class="alert danger"><strong>You are Offline.</strong><br>Turn the Online toggle ON to view and respond to new work requests.</div>`;
+    return;
+  }
+  const visible=workerBookings.filter(b=>{
+    const nearby=!workerProfile.area||b.area===workerProfile.area;
+    const category=!workerProfile.category||b.service.toLowerCase()===getCategoryName(workerProfile.category).toLowerCase();
+    return (nearby||b.mode==="Schedule")&&category&&b.status!=="Passed / Ignored"&&b.status!=="Declined";
+  });
+  if(!visible.length){box.innerHTML=`<p class="muted">No new work is currently available. Scheduled demand will appear here when matched.</p>`;return;}
+  box.innerHTML=visible.map(b=>`
+    <div class="card">
+      <div class="worker-top"><div><h3>${b.service}</h3><div class="muted">Booking: ${b.id}</div></div><span class="badge ${b.status==="Completed"?"":"pending"}">${b.status}</span></div>
+      <p><strong>Customer:</strong> ${b.customer}<br>📍 ${b.area}<br>🏠 ${b.address}<br>${b.mode==="Now"?"⚡ Now — nearby request":"📅 Scheduled — "+b.date+" at "+b.time}</p>
+      ${b.mode==="Schedule"?'<div class="alert good"><strong>Scheduled demand:</strong> planned according to customer requested date/time.</div>':'<div class="alert"><strong>Nearby request:</strong> Accept or pass this work.</div>'}
+      ${b.customerMedia?.length?`<div class="alert">📎 Customer shared with you: ${b.customerMedia.join(", ")}</div>`:""}
+      ${b.status==="Pending"?`<div class="actions"><button class="btn btn-good" onclick="acceptWorkerBooking('${b.id}')">✓ Accept</button><button class="btn btn-danger" onclick="passWorkerBooking('${b.id}')">↷ Pass / Ignore</button></div>`:""}
+      ${b.accepted&&b.status!=="Completed"?`<div class="actions"><button class="btn btn-primary" onclick="showWorkerQR('${b.id}')">▣ Show Worker QR</button></div>`:""}
+      ${b.accepted&&b.status!=="Completed"?`<div class="card"><h3>Complete Service</h3><p class="muted">Customer scans your QR first. After completion, enter the OTP shown on the customer's page.</p><input id="finishOtp_${b.id}" maxlength="6" placeholder="Enter completion OTP"><div class="form-group"></div><label>Upload completion photo/video evidence</label><input id="evidence_${b.id}" type="file" multiple accept="image/*,video/*"><button class="btn btn-secondary" onclick="completeWorkerBooking('${b.id}')">Confirm Service Completion</button></div>`:""}
+      ${b.evidence?.length?`<div class="alert good">Evidence uploaded: ${b.evidence.join(", ")}</div>`:""}
+    </div>`).join("");
+}
+function passWorkerBooking(id){
+  const b=workerBookings.find(x=>x.id===id);if(!b)return;
+  b.status="Passed / Ignored";b.accepted=false;renderWorkerBookings();toast(`${id} passed. Request can be allocated to another available worker.`);
+}
+
+
+function acceptWorkerBooking(id){
+
+  const b =
+    workerBookings.find(
+      x=>x.id===id
+    );
+
+  if(!b) return;
+
+  b.accepted=true;
+
+  b.status=
+    b.mode==="Now"
+    ? "Accepted"
+    : "Accepted — Scheduled";
+
+  renderWorkerBookings();
+
+  toast(
+    `${id} accepted successfully.`
+  );
+
+}
+
+
+function declineWorkerBooking(id){
+
+  const b =
+    workerBookings.find(
+      x=>x.id===id
+    );
+
+  if(!b) return;
+
+  b.status="Declined";
+
+  b.accepted=false;
+
+  renderWorkerBookings();
+
+  toast(`${id} declined.`);
+
+}
+
+
+/* =========================================================
+   WORKER QR
+========================================================= */
+
+function showWorkerQR(bookingId){
+
+  const b =
+    workerBookings.find(
+      x=>x.id===bookingId
+    );
+
+  if(!b) return;
+
+  $("workerQR").innerHTML="";
+
+  const qrPayload =
+    JSON.stringify({
+
+      platform:"SevaSetu",
+
+      bookingId:b.id,
+
+      workerId:b.workerId,
+
+      worker:b.worker
+
+    });
+
+  new QRCode(
+    $("workerQR"),
+    {
+      text:qrPayload,
+      width:210,
+      height:210
+    }
+  );
+
+  $("qrWorkerName").innerText=
+    b.worker;
+
+  $("qrBookingId").innerText=
+    "Booking ID: "+b.id;
+
+  openModal("workerQRModal");
+
+}
+
+
+/* =========================================================
+   WORKER COMPLETION
+========================================================= */
+
+function completeWorkerBooking(id){
+
+  const b =
+    workerBookings.find(
+      x=>x.id===id
+    );
+
+  if(!b) return;
+
+  const otp =
+    $(`finishOtp_${id}`).value.trim();
+
+  if(!b.completionOTP){
+
+    toast(
+      "Customer must scan the worker QR first."
+    );
+
+    return;
+
+  }
+
+  if(otp!==b.completionOTP){
+
+    toast("Incorrect completion OTP.");
+
+    return;
+
+  }
+
+  const evidence =
+    Array.from(
+      $(`evidence_${id}`).files
+    ).map(f=>f.name);
+
+  if(!evidence.length){
+
+    toast(
+      "Upload at least one completion photo/video as evidence."
+    );
+
+    return;
+
+  }
+
+  b.evidence=evidence;
+
+  b.status="Completed";
+
+  const cb =
+    custBookings.find(
+      x=>x.id===id
+    );
+
+  if(cb){
+
+    cb.status="Completed";
+
+  }
+
+  renderWorkerBookings();
+  renderCustomerBookings();
+
+  toast(
+    "Service completed and verified successfully."
+  );
+
+}
+
+
+/* =========================================================
+   FEDERATION NAVIGATION
+========================================================= */
+
+function adminNav(page){
+
+  const pages = [
+
+    "adminOverview",
+    "adminVerify",
+    "adminForecast",
+    "adminSocieties",
+    "adminContracts",
+    "adminBulk"
+
+  ];
+
+  pages.forEach(id=>
+    $(id).classList.add("hidden")
+  );
+
+  document.querySelectorAll("#adminApp .side-btn")
+    .forEach(b=>b.classList.remove("active"));
+
+  const map={
+
+    overview:[
+      "adminOverview",
+      "adminSideOverview",
+      "Federation Dashboard"
+    ],
+
+    verify:[
+      "adminVerify",
+      "adminSideVerify",
+      "Verification Queue"
+    ],
+
+    forecast:[
+      "adminForecast",
+      "adminSideForecast",
+      "AI Demand Forecast"
+    ],
+
+    societies:[
+      "adminSocieties",
+      "adminSideSocieties",
+      "Member Societies"
+    ],
+
+    contracts:[
+      "adminContracts",
+      "adminSideContracts",
+      "B2B / B2G Contracts"
+    ],
+
+    bulk:[
+      "adminBulk",
+      "adminSideBulk",
+      "Bulk Worker Assignment"
+    ]
+
+  };
+
+  const x=map[page];
+
+  $(x[0]).classList.remove("hidden");
+  $(x[1]).classList.add("active");
+  $("adminTitle").innerText=x[2];
+
+  if(page==="overview"){
+    drawDemandChart();
+  }
+
+  if(page==="forecast"){
+    drawForecastChart();
+  }
+
+  if(page==="bulk"){
+    renderBulkWorkers();
+  }
+
+}
+
+
+/* =========================================================
+   FEDERATION VERIFICATION
+========================================================= */
+
+function renderVerificationQueue(){
+
+  const box =
+    $("verificationQueue");
+
+  if(!box) return;
+
+  $("queueCount").innerText =
+    verificationQueue.filter(
+      x=>x.status==="Pending"
+    ).length;
+
+  box.innerHTML =
+    verificationQueue.map(q=>`
+
+      <div class="card">
+
+        <div class="worker-top">
+
+          <div>
+
+            <h3>${q.name}</h3>
+
+            <div class="muted">
+              ${q.skill} · Worker ID ${q.id}
+            </div>
+
+          </div>
+
+          <span class="badge
+            ${q.status==="Verified"
+              ? ""
+              : "pending"}">
+
+            ${q.status}
+
+          </span>
+
+        </div>
+
+        <p>
+
+          <strong>Documents:</strong>
+          ${q.documents.join(", ")}
+
+          <br>
+
+          <strong>PCC:</strong>
+          ${q.pcc}
+
+        </p>
+
+        ${
+          q.status==="Pending"
+
+          ?
+
+          `<div class="actions">
+
+            <button class="btn btn-good btn-small"
+                    onclick="approveWorker('${q.id}')">
+              Approve Worker
+            </button>
+
+            <button class="btn btn-secondary btn-small"
+                    onclick="verifyPCC('${q.id}')">
+              Verify PCC
+            </button>
+
+            <button class="btn btn-danger btn-small"
+                    onclick="rejectWorker('${q.id}')">
+              Request More Documents
+            </button>
+
+           </div>`
+
+          :
+
+          `<div class="alert good">
+             ✓ Worker verified and added to cooperative marketplace.
+           </div>`
+
+        }
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function approveWorker(id){
+
+  const q =
+    verificationQueue.find(
+      x=>x.id===id
+    );
+
+  if(!q) return;
+
+  q.status="Verified";
+
+  if(workerProfile.workerId===id){
+
+    workerProfile.verified=true;
+
+    updateWorkerProfileUI();
+
+  }
+
+  const w =
+    workers.find(
+      x=>x.id===id
+    );
+
+  if(w){
+
+    w.verified=true;
+
+  }
+
+  renderVerificationQueue();
+  renderWorkers();
+
+  toast(
+    `${q.name} verified successfully.`
+  );
+
+}
+
+
+function verifyPCC(id){
+
+  const q =
+    verificationQueue.find(
+      x=>x.id===id
+    );
+
+  if(!q) return;
+
+  q.pcc="Verified";
+
+  if(workerProfile.workerId===id){
+
+    workerProfile.pccStatus="Verified";
+
+    updateWorkerProfileUI();
+
+  }
+
+  const w =
+    workers.find(
+      x=>x.id===id
+    );
+
+  if(w){
+
+    w.pcc=true;
+
+  }
+
+  renderVerificationQueue();
+  renderWorkers();
+
+  toast(
+    `${q.name}'s PCC marked verified.`
+  );
+
+}
+
+
+function rejectWorker(id){
+
+  const q =
+    verificationQueue.find(
+      x=>x.id===id
+    );
+
+  if(!q) return;
+
+  q.status="More Documents Required";
+
+  renderVerificationQueue();
+
+  toast(
+    "Worker returned for additional documents."
+  );
+
+}
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
+let demandChartInstance=null;
+let forecastChartInstance=null;
+
+
+function drawDemandChart(){
+
+  if(typeof Chart==="undefined"){
+
+    loadChartJS();
+
+    return;
+
+  }
+
+  const ctx =
+    $("demandChart");
+
+  if(!ctx) return;
+
+  if(demandChartInstance){
+
+    demandChartInstance.destroy();
+
+  }
+
+  demandChartInstance =
+    new Chart(
+      ctx,
+      {
+        type:"bar",
+
+        data:{
+          labels:CATEGORIES.map(c=>c.name),
+
+          datasets:[
+            {
+              label:"Bookings",
+              data:[
+                420,
+                350,
+                270,
+                230,
+                510,
+                290,
+                180,
+                140
+              ]
+            }
+          ]
+        },
+
+        options:{
+          responsive:true,
+
+          plugins:{
+            legend:{
+              display:false
+            }
+          }
+        }
+
+      }
+    );
+
+}
+
+
+function drawForecastChart(){
+
+  if(typeof Chart==="undefined"){
+
+    loadChartJS();
+
+    return;
+
+  }
+
+  const ctx =
+    $("forecastChart");
+
+  if(!ctx) return;
+
+  if(forecastChartInstance){
+
+    forecastChartInstance.destroy();
+
+  }
+
+  forecastChartInstance =
+    new Chart(
+      ctx,
+      {
+        type:"line",
+
+        data:{
+
+          labels:[
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat",
+            "Sun"
+          ],
+
+          datasets:[
+
+            {
+              label:"Predicted Demand",
+
+              data:[
+                260,
+                310,
+                350,
+                390,
+                430,
+                560,
+                400
+              ],
+
+              tension:.35
+            },
+
+            {
+              label:"Available Workers",
+
+              data:[
+                300,
+                300,
+                320,
+                330,
+                350,
+                360,
+                350
+              ],
+
+              tension:.35
+            }
+
+          ]
+
+        },
+
+        options:{
+          responsive:true
+        }
+
+      }
+    );
+
+}
+
+
+function loadChartJS(){
+
+  const script =
+    document.createElement("script");
+
+  script.src=
+    "https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js";
+
+  script.onload=()=>{
+
+    drawDemandChart();
+
+  };
+
+  document.head.appendChild(script);
+
+}
+
+
+/* =========================================================
+   B2B / B2G CONTRACTS
+========================================================= */
+
+function createContract(){
+
+  const type =
+    $("contractType").value;
+
+  const organisation =
+    $("contractOrganisation")
+      .value.trim();
+
+  const service =
+    $("contractService").value;
+
+  const workersRequired =
+    Number($("contractWorkers").value);
+
+  if(!organisation){
+
+    toast("Enter organisation name.");
+
+    return;
+
+  }
+
+  const contract={
+
+    id:
+      "CON-"+Math.floor(
+        1000+Math.random()*9000
+      ),
+
+    type,
+
+    organisation,
+
+    service,
+
+    workersRequired,
+
+    assigned:[],
+
+    status:"Active"
+
+  };
+
+  contracts.unshift(contract);
+
+  $("contractOrganisation").value="";
+
+  renderContracts();
+  renderBulkWorkers();
+
+  toast(
+    `${type.split(" ")[0]} contract created.`
+  );
+
+}
+
+
+function renderContracts(){
+
+  const box =
+    $("contractList");
+
+  if(!box) return;
+
+  $("bulkContract").innerHTML =
+    contracts.length
+
+    ?
+
+    contracts.map(c=>
+      `<option value="${c.id}">
+        ${c.id} — ${c.organisation}
+      </option>`
+    ).join("")
+
+    :
+
+    `<option value="">
+       No contracts available
+     </option>`;
+
+  if(!contracts.length){
+
+    box.innerHTML=
+      `<p class="muted">
+        No contracts created yet.
+       </p>`;
+
+    return;
+
+  }
+
+  box.innerHTML =
+    contracts.map(c=>`
+
+      <div class="card">
+
+        <div class="worker-top">
+
+          <div>
+
+            <h3>
+              ${c.organisation}
+            </h3>
+
+            <div class="muted">
+              ${c.id}
+            </div>
+
+          </div>
+
+          <span class="badge">
+            ${c.type}
+          </span>
+
+        </div>
+
+        <p>
+
+          Service:
+          <strong>${getCategoryName(c.service)}</strong>
+
+          <br>
+
+          Required:
+          <strong>${c.workersRequired}</strong>
+
+          <br>
+
+          Assigned:
+          <strong>${c.assigned.length}</strong>
+
+        </p>
+
+        <button class="btn btn-secondary btn-small"
+                onclick="adminNav('bulk')">
+          Bulk Assign Workers
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   BULK ASSIGNMENT
+========================================================= */
+
+function renderBulkWorkers(){
+
+  const box =
+    $("bulkWorkerList");
+
+  if(!box) return;
+
+  const verifiedWorkers =
+    workers.filter(
+      w=>w.verified
+    );
+
+  box.innerHTML =
+    verifiedWorkers.map(w=>`
+
+      <label class="checkbox"
+             style="padding:8px;
+                    border:1px solid var(--line);
+                    margin-bottom:5px;
+                    border-radius:7px">
+
+        <input type="checkbox"
+               class="bulkWorker"
+               value="${w.id}">
+
+        <span>
+
+          <strong>${w.name}</strong>
+
+          —
+          ${getCategoryName(w.category)}
+
+          —
+          ${w.area}
+
+          ${
+            w.pcc
+            ? "✓ PCC"
+            : ""
+          }
+
+        </span>
+
+      </label>
+
+    `).join("");
+
+}
+
+
+function assignBulkWorkers(){
+
+  const contractId =
+    $("bulkContract").value;
+
+  if(!contractId){
+
+    toast("Create/select a contract first.");
+
+    return;
+
+  }
+
+  const selected =
+    Array.from(
+      document.querySelectorAll(
+        ".bulkWorker:checked"
+      )
+    ).map(x=>x.value);
+
+  if(!selected.length){
+
+    toast("Select at least one worker.");
+
+    return;
+
+  }
+
+  const contract =
+    contracts.find(
+      x=>x.id===contractId
+    );
+
+  if(!contract) return;
+
+  contract.assigned =
+    Array.from(
+      new Set([
+        ...contract.assigned,
+        ...selected
+      ])
+    );
+
+  renderContracts();
+
+  toast(
+    `${selected.length} workers assigned to ${contract.organisation}.`
+  );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL WHEN BACKDROP CLICKED
+========================================================= */
+
+document.querySelectorAll(".modal")
+  .forEach(modal=>{
+
+    modal.addEventListener("click",e=>{
+
+      if(e.target===modal){
+
+        if(modal.id==="scannerModal"){
+
+          stopScanner();
+
+        }
+        else{
+
+          modal.classList.remove("show");
+
+        }
+
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   END
+========================================================= */
+
+</script>
+
+</body>
+</html>
